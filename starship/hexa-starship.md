@@ -1,3 +1,6 @@
+<!-- @canonical: n6-architecture@0570a835:domains/space/hexa-starship/hexa-starship.md -->
+<!-- @extracted: 2026-05-06 -->
+<!-- @md5_at_extraction: b859c384ab09e633a5d2bf4d8429e160 -->
 <!-- gold-standard: shared/harness/sample.md -->
 ---
 domain: starship

@@ -1,3 +1,6 @@
+<!-- @canonical: n6-architecture@0570a835:domains/space/aerospace/aerospace.md -->
+<!-- @extracted: 2026-05-06 -->
+<!-- @md5_at_extraction: 7f5d0ad3cd1ea0018a87f3ec66cd6ead -->
 <!-- gold-standard: shared/harness/sample.md -->
 ---
 domain: aerospace

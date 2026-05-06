@@ -1,3 +1,6 @@
+<!-- @canonical: n6-architecture@0570a835:domains/space/space-systems/space-systems.md -->
+<!-- @extracted: 2026-05-06 -->
+<!-- @md5_at_extraction: f356ac2845be8858565d0478b1701a79 -->
 <!-- gold-standard: shared/harness/sample.md -->
 ---
 domain: space-systems

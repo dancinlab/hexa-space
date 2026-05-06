@@ -1,3 +1,6 @@
+<!-- @canonical: n6-architecture@0570a835:domains/space/astrobiology/astrobiology.md -->
+<!-- @extracted: 2026-05-06 -->
+<!-- @md5_at_extraction: 4a46caef57903fc77b70be31257414e8 -->
 <!-- gold-standard: shared/harness/sample.md -->
 ---
 domain: astrobiology
