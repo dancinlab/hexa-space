@@ -1,0 +1,358 @@
+#!hexa strict
+// hexa-space/cli/hexa-space.hexa — standalone hexa-space CLI router (placeholder).
+//
+// 11-verb Space Toolkit (HEXA family) router, organized in 4 GROUPS:
+//
+//   core (2):
+//     cosmic              — early-universe observation mesh   (SPEC v1.0.0)
+//     starship            — deep-space crewed vessel          (SPEC v1.0.0)
+//
+//   engineering (4):
+//     aerospace           — atmospheric / orbital systems     (SPEC v1.0.0)
+//     aerospace_transport — launch / re-entry transport       (SPEC v1.0.0)
+//     engineering         — space-engineering primitives      (SPEC v1.0.0)
+//     systems             — space-systems integration         (SPEC v1.0.0)
+//
+//   observation (3):
+//     astrodynamics       — orbital mechanics                 (SPEC v1.0.0)
+//     astronomy           — stellar / galactic survey         (SPEC v1.0.0)
+//     obs_astronomy       — observational pipelines           (SPEC v1.0.0)
+//
+//   life (2):
+//     astrobiology        — biosignature / habitability       (SPEC v1.0.0)
+//     medicine            — space-medicine / radiation        (SPEC v1.0.0)
+//
+// Plus utility subcmds:
+//   status     — verb status table (11 verbs / 4 groups, all SPEC)
+//   selftest   — verify all 11 verb specs present + sentinel
+//   group      — show verbs in a group: hexa-space group <core|engineering|observation|life>
+//   help       — this help
+//   --version  — print version
+//
+// Root resolution: $HEXA_SPACE_ROOT env, else inferred from $0 dirname.
+//
+// Constraints:
+//   raw#9   — hexa-only orchestration; no Python deps.
+//   raw#15  — write-confined (audit log only).
+//   raw#10  — honest C3: this is SPEC-FIRST; verb modules are .md design docs,
+//             not executable empirical sandboxes. Working .hexa CLI TBD.
+//
+// Cost: $0 (Mac local; placeholder dispatcher reads spec files only).
+//
+// @no-lock-needed
+// @resolver-bypass(reason="Pure local CLI router; verb specs are .md design docs.")
+
+let VERSION = "1.0.0"
+
+// ─── env / path resolve ───
+
+let HOME = env("HOME")
+let HEXA_SPACE_ROOT_ENV = env("HEXA_SPACE_ROOT")
+
+fn hexa_space_root() -> str {
+    if HEXA_SPACE_ROOT_ENV.len() > 0 { return HEXA_SPACE_ROOT_ENV }
+    let inferred = exec("dirname \"$(dirname \"$0\")\" 2>/dev/null || true").trim()
+    if inferred.len() > 0 { return inferred }
+    return HOME + "/.hexa-space"  // @allow-devpath
+}
+
+let HS = hexa_space_root()
+
+// ─── verb registry (11 verbs, grouped) ───
+//
+// Each entry: (group, verb_slug, spec_relpath)
+// Spec files are the .md design docs cp -R'd from n6-architecture/domains/space/.
+
+let VERBS_CORE: [str] = [
+    "cosmic|cosmic/hexa-cosmic.md",
+    "starship|starship/hexa-starship.md",
+]
+let VERBS_ENGINEERING: [str] = [
+    "aerospace|aerospace/aerospace.md",
+    "aerospace_transport|aerospace_transport/aerospace-transport.md",
+    "engineering|engineering/space-engineering.md",
+    "systems|systems/space-systems.md",
+]
+let VERBS_OBSERVATION: [str] = [
+    "astrodynamics|astrodynamics/astrodynamics.md",
+    "astronomy|astronomy/astronomy.md",
+    "obs_astronomy|obs_astronomy/observational-astronomy.md",
+]
+let VERBS_LIFE: [str] = [
+    "astrobiology|astrobiology/astrobiology.md",
+    "medicine|medicine/space-medicine.md",
+]
+
+let LOG_PATH = HS + "/state/hexa_space_cli.log"
+
+// ─── arg helpers ───
+
+fn shq(s: str) -> str {
+    return "'" + s.replace("'", "'\\''") + "'"
+}
+
+fn has_flag(a: [str], flag: str) -> bool {
+    for x in a {
+        if x == flag { return true }
+    }
+    return false
+}
+
+fn json_mode(a: [str]) -> bool {
+    return has_flag(a, "--json")
+}
+
+fn _file_exists(p: str) -> bool {
+    let r = exec("[ -f " + shq(p) + " ] && echo yes || echo no").trim()
+    return r == "yes"
+}
+
+fn _split_pipe(s: str) -> [str] {
+    // returns [verb_slug, spec_relpath]
+    let mut parts: [str] = []
+    let mut cur = ""
+    let mut i = 0
+    while i < s.len() {
+        let c = s.substr(i, i + 1)
+        if c == "|" {
+            parts = parts + [cur]
+            cur = ""
+        } else {
+            cur = cur + c
+        }
+        i = i + 1
+    }
+    parts = parts + [cur]
+    return parts
+}
+
+// ─── audit log (jsonl) ───
+
+fn _ts_now() -> str {
+    return exec("date -u '+%Y-%m-%dT%H:%M:%SZ'").trim()
+}
+
+fn _audit(subcmd: str, args_str: str, exit_code: int) {
+    let line = "{\"ts\":\"" + _ts_now() + "\",\"caller\":\"hexa_space_standalone\",\"subcmd\":\"hexa-space " +
+               subcmd + "\",\"args\":\"" + args_str.replace("\"", "\\\"") +
+               "\",\"exit_code\":" + str(exit_code) + ",\"version\":\"" + VERSION + "\"}"
+    exec("mkdir -p " + shq(HS + "/state") + " 2>/dev/null")
+    exec("echo " + shq(line) + " >> " + shq(LOG_PATH) + " 2>/dev/null")
+}
+
+// ─── caveat printer (raw#10 honest C3) ───
+
+fn _print_caveats() {
+    println("")
+    println("--- caveats (raw#10 C3) ---")
+    println("  1. SPEC_ONLY at v1.0.0 — all 11 verbs ship as .md design docs;")
+    println("     no working empirical sandbox in this repo. Working .hexa CLI TBD.")
+    println("  2. n=6 invariant lattice (σ=12, τ=4, φ=2, J₂=24) is hypothesized")
+    println("     for all 11 verbs; no independent in-repo verification.")
+    println("  3. Sister theory-side substrate lives at need-singularity/hexa-cosmos")
+    println("     (cosmology + particle + cosmic-observatory). starship sister at")
+    println("     need-singularity/hexa-ufo.")
+}
+
+// ─── verb iteration helpers ───
+
+fn _group_label(g: str) -> str {
+    if g == "core"        { return "core (2)" }
+    if g == "engineering" { return "engineering (4)" }
+    if g == "observation" { return "observation (3)" }
+    if g == "life"        { return "life (2)" }
+    return g
+}
+
+fn _verbs_for(g: str) -> [str] {
+    if g == "core"        { return VERBS_CORE }
+    if g == "engineering" { return VERBS_ENGINEERING }
+    if g == "observation" { return VERBS_OBSERVATION }
+    if g == "life"        { return VERBS_LIFE }
+    return []
+}
+
+// ─── subcommand: status ───
+
+fn cmd_status(a: [str]) {
+    if json_mode(a) {
+        let mut js = "{\"hexa_space\":\"" + VERSION + "\",\"subcmd\":\"status\","
+        js = js + "\"verbs_total\":11,\"verbs_spec\":11,\"verbs_wired\":0,"
+        js = js + "\"verdict\":\"SPEC_ONLY\","
+        js = js + "\"groups\":{\"core\":2,\"engineering\":4,\"observation\":3,\"life\":2}"
+        js = js + "}"
+        println(js)
+        return
+    }
+
+    println("hexa-space " + VERSION + " status — 11-verb Space Toolkit (HEXA family) / 4 groups")
+    println("")
+    let groups: [str] = ["core", "engineering", "observation", "life"]
+    for g in groups {
+        println("  [" + _group_label(g) + "]")
+        for entry in _verbs_for(g) {
+            let parts = _split_pipe(entry)
+            let verb = parts[0]
+            let spec = parts[1]
+            let exists = _file_exists(HS + "/" + spec)
+            let mark = if exists { "OK " } else { "?? " }
+            println("    " + mark + verb + "  ← " + spec)
+        }
+        println("")
+    }
+    println("  verdict: SPEC_ONLY (11/11 verbs spec-only; 0/11 wired)")
+    _print_caveats()
+}
+
+// ─── subcommand: group ───
+
+fn cmd_group(a: [str]) {
+    if a.len() < 4 {
+        eprintln("usage: hexa-space group <core|engineering|observation|life>")
+        exit(2)
+    }
+    let g = a[3]
+    let verbs = _verbs_for(g)
+    if verbs.len() == 0 {
+        eprintln("hexa-space group: unknown group '" + g + "'")
+        eprintln("  valid: core, engineering, observation, life")
+        exit(2)
+    }
+    println("hexa-space group " + g + " — " + _group_label(g))
+    for entry in verbs {
+        let parts = _split_pipe(entry)
+        println("  " + parts[0] + "  ← " + parts[1])
+    }
+    _audit("group", g, 0)
+}
+
+// ─── subcommand: selftest ───
+
+fn cmd_selftest(a: [str]) {
+    let groups: [str] = ["core", "engineering", "observation", "life"]
+    let mut total = 0
+    let mut found = 0
+    let mut missing: [str] = []
+
+    for g in groups {
+        for entry in _verbs_for(g) {
+            total = total + 1
+            let parts = _split_pipe(entry)
+            let spec_abs = HS + "/" + parts[1]
+            if _file_exists(spec_abs) {
+                found = found + 1
+            } else {
+                missing = missing + [parts[0] + " (" + parts[1] + ")"]
+            }
+        }
+    }
+
+    println("hexa-space selftest — verb-spec presence sweep")
+    println("  total:   " + str(total))
+    println("  found:   " + str(found))
+    println("  missing: " + str(total - found))
+    for m in missing {
+        println("    !! " + m)
+    }
+
+    let pass = (found == 11) && (total == 11)
+    if pass {
+        println("__HEXA_SPACE_SELFTEST__ PASS  (11/11 verb specs present)")
+    } else {
+        println("__HEXA_SPACE_SELFTEST__ FAIL  (" + str(found) + "/11 verb specs present)")
+    }
+
+    if json_mode(a) {
+        let verdict = if pass { "PASS" } else { "FAIL" }
+        println("{\"hexa_space\":\"" + VERSION + "\",\"subcmd\":\"selftest\",\"verdict\":\"" + verdict + "\",\"total\":" + str(total) + ",\"found\":" + str(found) + "}")
+    }
+    _print_caveats()
+    _audit("selftest", "", if pass { 0 } else { 1 })
+    if pass == false { exit(1) }
+}
+
+// ─── version ───
+
+fn cmd_version() {
+    println("hexa-space " + VERSION)
+    println("standalone Space Toolkit (HEXA family — extracted from n6-architecture@c0f1f570 2026-05-06)")
+    println("license: MIT")
+    println("repo:    https://github.com/need-singularity/hexa-space")
+}
+
+// ─── help ───
+
+fn cmd_help() {
+    println("hexa-space " + VERSION + " — standalone Space Toolkit CLI (placeholder)")
+    println("")
+    println("usage: hexa-space <subcmd> [flags...]")
+    println("")
+    println("group subcommands (4 groups · 11 verbs):")
+    println("  group core          (2): cosmic, starship")
+    println("  group engineering   (4): aerospace, aerospace_transport, engineering, systems")
+    println("  group observation   (3): astrodynamics, astronomy, obs_astronomy")
+    println("  group life          (2): astrobiology, medicine")
+    println("")
+    println("utility subcommands:")
+    println("  status              11-verb status table + caveats")
+    println("  selftest            verb-spec presence sweep (11/11 expected)")
+    println("")
+    println("global flags:")
+    println("  --version           show version")
+    println("  --json              machine-parseable JSON tail")
+    println("  --help, -h          this help")
+    println("")
+    println("env:")
+    println("  HEXA_SPACE_ROOT     override repo root (default: inferred from $0)")
+    println("")
+    println("cost estimate (Mac local): $0 — placeholder dispatcher reads .md specs only.")
+}
+
+// ─── main ───
+
+fn main() {
+    let _raw = args()
+    let mut _sidx = -1
+    let mut _i = 0
+    while _i < _raw.len() {
+        if _raw[_i].ends_with(".hexa") { _sidx = _i; break }
+        _i = _i + 1
+    }
+    let mut _user_start = 2
+    if _sidx >= 0 { _user_start = _sidx + 1 }
+
+    let mut a: [str] = ["hexa_space_cli", "hexa_space_router"]
+    let mut _ua = _user_start
+    while _ua < _raw.len() {
+        a = a + [_raw[_ua]]
+        _ua = _ua + 1
+    }
+    let n = len(a)
+
+    if n < 3 {
+        cmd_help()
+        return
+    }
+
+    let sub = a[2]
+
+    if sub == "--version" || sub == "-V" || sub == "version" {
+        cmd_version()
+        return
+    }
+
+    if has_flag(a, "--help") || has_flag(a, "-h") {
+        cmd_help()
+        return
+    }
+
+    if sub == "help"     { cmd_help();         return }
+    if sub == "status"   { cmd_status(a);      return }
+    if sub == "group"    { cmd_group(a);       return }
+    if sub == "selftest" { cmd_selftest(a);    return }
+
+    eprintln("hexa-space: unknown subcommand '" + sub + "'")
+    eprintln("run 'hexa-space help' for usage")
+    _audit(sub, "", 2)
+    exit(2)
+}
