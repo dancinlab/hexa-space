@@ -1,4 +1,4 @@
-# hexa-space — Space Toolkit (HEXA family) 🚀
+# 🚀 hexa-space — Space Toolkit (HEXA family)
 
 > **11-verb space substrate** organized in **4 groups** —
 > **core** (cosmic, starship) · **engineering** (aerospace, aerospace_transport,
