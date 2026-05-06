@@ -1,0 +1,60 @@
+# .roadmap.hexa_space — repo-overall tracker
+
+> Cross-cutting state: invariant lattice, release cadence, cycle history,
+> deadlines, pointers. Sister of `hexa-cosmos` / `hexa-scope` / `hexa-ufo` /
+> `hexa-rtsc` under `need-singularity` org.
+
+**Last sync**: 2026-05-06 · **Current release**: v1.0.0 · **Branch**: `main`
+
+---
+
+## §0 Terminal goal — 11-verb space substrate (4 그룹 모두 working spec)
+
+hexa-space 도착지 = **11-verb space substrate (core·engineering·observation·life) 모두 working spec + 1+ verb 실증 데이터 cross-link (SpaceX/NASA/ISS public)**.
+
+DoD:
+1. `core` (cosmic + starship) 통합 spec.
+2. `engineering` (aerospace + transport + engineering + systems) Falcon 9 / Starship public data fit.
+3. `observation` (astrodynamics + astronomy + obs_astronomy) Gaia DR3 cross-verify.
+4. `life` (astrobiology + medicine) ISS public health data n=6 fit.
+
+## §A.1 Invariant lattice (n=6)
+
+```
+σ(6) · φ(6) = n · τ(6) = J₂ = 24
+   12   ·   2  =  6  ·   4  = 24
+```
+
+| Symbol | Value | Role | Space projection |
+|--------|-------|------|------------------|
+| σ(6)   | 12    | sigma — cardinality bin | 12-month launch window cadence |
+| τ(6)   | 4     | tau — state quartet | 4 mission phases (design / build / launch / operate) |
+| φ(6)   | 2     | phi — verdict bit | crewed / uncrewed |
+| J₂     | 24    | Mathieu / Leech | 24-hour orbit harmonic (LEO ~ 90 min × σ·τ/2) |
+
+## §A.2 Release cadence
+
+| Version | Date | Status | Highlights |
+|---------|------|--------|------------|
+| v1.0.0 | 2026-05-06 | RELEASED | 11 verb 시드 + 4 그룹 표 |
+| v1.1.0 | ~2026-08 (TARGET) | planned | `astrodynamics` Kepler n=6 orbital mechanics .hexa |
+| v1.2.0 | ~2026-10 | planned | `astronomy` + `obs_astronomy` Gaia DR3 cross-verify |
+| v1.3.0 | ~2026-12 | planned | `aerospace` + `engineering` Falcon 9 / Starship public data fit |
+| v2.0.0 | ~2027-Q3 | ASPIRATIONAL | `astrobiology` + `medicine` ISS public health data n=6 fit |
+
+## §A.3 Cycle history
+
+- **Cycle 0 (2026-05-06)** — v1.0.0 initial extraction from n6-architecture@c0f1f570. Commit `dc65652`. 11 verb cp -R.
+
+## §A.4 Falsifier preregister
+
+- **F-SPACE-1** — Kepler 3rd law n=6 corrections 측정 ±0.1% 일치 (Mercury perihelion advance baseline)?
+- **F-SPACE-2** — Falcon 9 9-engine layout (3·3 grid = σ-φ+1) n=6 invariant 분석?
+- **F-SPACE-3** — ISS astronaut bone-loss τ=4 phase 회복 모델 NASA Twin Study fit?
+- **F-SPACE-4** — Starship 33-Raptor cluster (σ·τ-15) n=6 closed-form?
+
+## §A.5 Pending decisions
+
+- 4-그룹 의 .hexa CLI dispatch 우선순위 (observation 먼저 vs engineering 먼저).
+- hexa-scope 와의 obs_astronomy verb 중복 처리 (scope에 specialize fork).
+- ISS health data ToS / privacy issue 사전 확인.
