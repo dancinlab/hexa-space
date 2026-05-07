@@ -279,6 +279,9 @@ fn _verify_path_for(verb: str) -> str {
     // Engineering verb has hyphenated filename
     let p_eng = HS + "/engineering/verify_space-engineering.hexa"
     if verb == "engineering" && _file_exists(p_eng) { return p_eng }
+    // Medicine verb has hyphenated filename (matches space-medicine.md spec)
+    let p_med = HS + "/medicine/verify_space-medicine.hexa"
+    if verb == "medicine" && _file_exists(p_med) { return p_med }
     // Aerospace_transport has spacex/mk_ladder, return spacex as default
     let p_at = HS + "/aerospace_transport/verify_spacex.hexa"
     if verb == "aerospace_transport" && _file_exists(p_at) { return p_at }

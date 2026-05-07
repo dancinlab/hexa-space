@@ -5,6 +5,24 @@ All notable changes to **hexa-space** are documented here. Format follows
 
 ## [unreleased] - 2026-05-08
 
+### Added (2026-05-08 — RSC iter 4) — `medicine/verify_space-medicine.hexa`
+
+F-SPACE-3 T1 (algebraic) calc — ISS bone-loss τ=4 phase / NASA HRP n=6
+risk-area bookkeeping.
+
+- 9-check arithmetic: master closure σ·φ = n·τ = J₂; 6 NASA HRP risk
+  areas = n; 6 ISS physiological monitoring systems = n; 6 HERA isolation
+  phases = n; τ = 4 bone-loss recovery phases (acute / subacute /
+  remodelling / recovered) — F-SPACE-3 anchor; J₂ = 24-week ISS
+  expedition; φ = 2 (pre/post-flight Twin Study); σ = 12 coverage cells
+  (6 systems × 2 axes); 1%/month × n months = n% per expedition bone
+  loss. Sentinel `__HEXA_MEDICINE_VERIFY__ PASS` — **9/9 EXACT**.
+- `cli/hexa-space.hexa` `_verify_path_for` — special-cases `medicine` to
+  the hyphenated `verify_space-medicine.hexa` path (mirrors the existing
+  `engineering` special-case).
+- F-SPACE-3 closure pct lifts to 33% (T1 ✓; T2 + T3 pending). All 4
+  falsifiers (1/2/3/4) now have T1 closure.
+
 ### Added (2026-05-08 — RSC iter 3) — `astrodynamics/verify_astrodynamics.hexa`
 
 F-SPACE-1 T1 (algebraic) calc — Kepler 3rd law n=6 closed-forms.
