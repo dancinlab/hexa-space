@@ -256,6 +256,7 @@ fn cmd_group(a: [str]) {
 
 let TOP_VERIFY_ALIASES: [str] = [
     "lattice|verify/lattice_check.hexa",
+    "cross-doc|verify/cross_doc_audit.hexa",
 ]
 
 fn _top_verify_path_for(slug: str) -> str {
@@ -288,7 +289,7 @@ fn cmd_verify(a: [str]) {
     if a.len() < 4 {
         eprintln("usage: hexa-space verify <verb-or-cross-cutter>")
         eprintln("       hexa-space verify-all")
-        eprintln("       cross-cutters: lattice")
+        eprintln("       cross-cutters: lattice | cross-doc")
         exit(2)
     }
     let slug = a[3]
@@ -585,6 +586,7 @@ fn cmd_help() {
     println("  ops [verify-all]    operations-group registry / 16-verb verify sweep")
     println("  verify <verb>       run verify_<verb>.hexa for any registered verb")
     println("  verify lattice      run verify/lattice_check.hexa (n=6 cross-pillar audit)")
+    println("  verify cross-doc    run verify/cross_doc_audit.hexa (anchor consistency)")
     println("  verify-all          run every available verify_*.hexa across all 5 groups")
     println("  spacex <subcmd>     SpaceX 2026 program registry (intel/list/active/upcoming")
     println("                      group/show/counts/verify/mk) — see `hexa-space spacex help`")

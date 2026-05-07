@@ -1,12 +1,40 @@
 #!hexa strict
-// tests/test_lattice.hexa — regression for verify/lattice_check.hexa.
+// tests/test_lattice.hexa — regression for top-level verify/ cross-cutters.
 //
-// Pass criteria:
-//   1. `hexa run verify/lattice_check.hexa` exits 0.
-//   2. Output contains `__HEXA_SPACE_LATTICE__ PASS` sentinel.
-//   3. CLI proxy `hexa-space verify lattice` likewise emits PASS.
+// Covers:
+//   1. verify/lattice_check.hexa  → __HEXA_SPACE_LATTICE__ PASS
+//   2. verify/cross_doc_audit.hexa → __HEXA_SPACE_CROSSDOC__ PASS
+// Each is checked both via direct invocation and via the
+// `hexa-space verify <slug>` cli proxy.
 //
 // Cost: $0 (Mac local; pure file reads + arithmetic).
+
+fn _check_pair(label: str, root: str, script_rel: str, slug: str, sentinel: str) -> bool {
+    let direct_p   = root + "/" + script_rel
+    let direct_cmd = "HEXA_SPACE_ROOT=\"" + root + "\" hexa run \"" + direct_p + "\" 2>&1"
+    let direct_out = exec(direct_cmd)
+    let direct_ok  = direct_out.contains(sentinel)
+    println("  [direct] " + script_rel + "  " + str(direct_ok))
+
+    let cli       = root + "/cli/hexa-space.hexa"
+    let proxy_cmd = "HEXA_SPACE_ROOT=\"" + root + "\" hexa run \"" + cli + "\" verify " + slug + " 2>&1"
+    let proxy_out = exec(proxy_cmd)
+    let proxy_ok  = proxy_out.contains(sentinel)
+    println("  [proxy]  hexa-space verify " + slug + "  " + str(proxy_ok))
+
+    let ok = direct_ok && proxy_ok
+    if !ok {
+        if !direct_ok {
+            println("--- " + label + " direct output ---")
+            println(direct_out.trim())
+        }
+        if !proxy_ok {
+            println("--- " + label + " proxy output ---")
+            println(proxy_out.trim())
+        }
+    }
+    return ok
+}
 
 fn main() {
     let mut root = env("HEXA_SPACE_ROOT")
@@ -15,33 +43,17 @@ fn main() {
     }
     println("test_lattice: HEXA_SPACE_ROOT=" + root)
 
-    // ─── 1. direct run of verify/lattice_check.hexa ───
-    let direct_p   = root + "/verify/lattice_check.hexa"
-    let direct_cmd = "HEXA_SPACE_ROOT=\"" + root + "\" hexa run \"" + direct_p + "\" 2>&1"
-    let direct_out = exec(direct_cmd)
-    let direct_ok  = direct_out.contains("__HEXA_SPACE_LATTICE__ PASS")
-    println("  [direct] verify/lattice_check.hexa  " + str(direct_ok))
+    let lattice_ok = _check_pair("lattice",
+        root, "verify/lattice_check.hexa",
+        "lattice", "__HEXA_SPACE_LATTICE__ PASS")
+    let crossdoc_ok = _check_pair("cross-doc",
+        root, "verify/cross_doc_audit.hexa",
+        "cross-doc", "__HEXA_SPACE_CROSSDOC__ PASS")
 
-    // ─── 2. CLI proxy via `hexa-space verify lattice` ───
-    let cli       = root + "/cli/hexa-space.hexa"
-    let proxy_cmd = "HEXA_SPACE_ROOT=\"" + root + "\" hexa run \"" + cli + "\" verify lattice 2>&1"
-    let proxy_out = exec(proxy_cmd)
-    let proxy_ok  = proxy_out.contains("__HEXA_SPACE_LATTICE__ PASS")
-    println("  [proxy]  hexa-space verify lattice  " + str(proxy_ok))
-
-    if direct_ok && proxy_ok {
-        println("test_lattice: PASS  (lattice_check sentinel + cli proxy both green)")
+    if lattice_ok && crossdoc_ok {
+        println("test_lattice: PASS  (2/2 cross-cutter sentinels + cli proxies green)")
         return
     }
-
     println("test_lattice: FAIL")
-    if !direct_ok {
-        println("--- direct output (last 30 lines) ---")
-        println(direct_out.trim())
-    }
-    if !proxy_ok {
-        println("--- proxy output (last 30 lines) ---")
-        println(proxy_out.trim())
-    }
     exit(1)
 }

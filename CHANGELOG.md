@@ -5,6 +5,26 @@ All notable changes to **hexa-space** are documented here. Format follows
 
 ## [unreleased] - 2026-05-08
 
+### Added (2026-05-08 — RSC iter 2) — `verify/cross_doc_audit.hexa`
+
+Second cross-cutter under the RSC recipe — anchor-consistency audit
+across roadmap + 27 verb specs + README + CHANGELOG + hexa.toml.
+
+- `verify/cross_doc_audit.hexa` — 18-check audit covering: 27/27 specs
+  carry `@canonical`/`@origin`/`n6-architecture` provenance headers;
+  16/16 ops specs cite `aerospace_transport/spacex_intel_2026.md`; SoT
+  intel doc present + > 1 KB; roadmap §A.4 preregisters all 4
+  falsifiers (F-SPACE-1..4); roadmap names sister substrates
+  (hexa-cosmos / hexa-ufo / hexa-rtsc); README declares all 5 groups +
+  27-verb count; CHANGELOG documents v1.0.0 baseline + operations
+  extension; `hexa.toml [closure]` figures (27/11/16) and
+  `[modules].hexa` enumerates all 27 specs. Sentinel
+  `__HEXA_SPACE_CROSSDOC__ PASS` — **18/18 EXACT**.
+- `cli/hexa-space.hexa` — `TOP_VERIFY_ALIASES` extends with
+  `cross-doc → verify/cross_doc_audit.hexa`; help + usage updated.
+- `tests/test_lattice.hexa` — generalized to 2/2 cross-cutter sweep
+  (lattice + cross-doc), each via direct + cli-proxy.
+
 ### Added (2026-05-08 — RSC iter 1) — top-level `verify/` cross-cutter
 
 Initial application of the **Runnable Surface Construction** (RSC) recipe
