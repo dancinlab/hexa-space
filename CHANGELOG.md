@@ -5,6 +5,26 @@ All notable changes to **hexa-space** are documented here. Format follows
 
 ## [unreleased] - 2026-05-08
 
+### Added (2026-05-08 — RSC iter 5) — `verify/numerics_kepler.hexa`
+
+F-SPACE-1 first T2 (numerical) — Kepler 3rd law via real-float orbit
+period computation against the n=6 closed-form `astrodynamics/verify_*`
+predictions.
+
+- `verify/numerics_kepler.hexa` — math_pure-only floating-point script
+  (no libm) that computes T = 2π·sqrt(a³/μ) for LEO (R_E + 400 km) and
+  GEO (R_E + 35,786 km) from WGS84/IAU constants (μ = 3.986e14, R_E =
+  6.371e6). Verifies: T_LEO ∈ [88, 96] min (got 92.4); T_GEO ∈
+  [23.5, 24.5] h (got 23.93); T_GEO/T_LEO within ±5% of σ·τ/3 = 16
+  (got 15.54, rel-err 2.9%); Kepler 3rd identity (T²/a³ const) at
+  numerical precision (rel-err < 1e-10); π via math_pure within float64
+  precision; n=6 closure floor. Sentinel `__HEXA_SPACE_NUMERICS_KEPLER__
+  PASS` — **6/6 PASS**.
+- `cli/hexa-space.hexa` — `numerics-kepler` alias added; help/usage
+  updated.
+- F-SPACE-1 closure pct lifts to **67%** (T1 ✓ + T2 ✓; T3 awaits
+  Stage-1 hardware).
+
 ### Added (2026-05-08 — RSC iter 4) — `medicine/verify_space-medicine.hexa`
 
 F-SPACE-3 T1 (algebraic) calc — ISS bone-loss τ=4 phase / NASA HRP n=6
