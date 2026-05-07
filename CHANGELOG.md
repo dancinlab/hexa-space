@@ -5,6 +5,23 @@ All notable changes to **hexa-space** are documented here. Format follows
 
 ## [unreleased] - 2026-05-08
 
+### Added (2026-05-08 — RSC iter 6) — `verify/numerics_falcon.hexa`
+
+F-SPACE-2 first T2 (numerical) — Falcon 9 octaweb 9-engine layout +
+Tsiolkovsky Δv vs published SpaceX numbers.
+
+- `verify/numerics_falcon.hexa` — math_pure-only floats. 9/9 PASS:
+  octaweb 1+8 = σ−n+3 = 9 Merlins; outer ring = J₂/3 = 8; sea-level
+  thrust 9·854 kN ≈ 7686 kN (catalog 7607); Tsiolkovsky Δv with full
+  S2+payload stack (Isp_avg=297, mass-ratio 4.65) ≈ 3.18 km/s within
+  booster band [2.0, 4.5]; LEO payload anchor J₂−φ+1 = 23 t (cat 22.8);
+  yearly cadence J₂·σ/φ = 144; reuse-cert J₂+σ+φ+2 = 40; n=6 closure
+  floor; math_pure log_pure(e) = 1 within 1e-6. Sentinel
+  `__HEXA_SPACE_NUMERICS_FALCON__ PASS`.
+- `cli/hexa-space.hexa` — `numerics-falcon` alias added.
+- F-SPACE-2 closure pct lifts to **67%** (T1 ✓ + T2 ✓; T3 awaits
+  Stage-1 hardware).
+
 ### Added (2026-05-08 — RSC iter 5) — `verify/numerics_kepler.hexa`
 
 F-SPACE-1 first T2 (numerical) — Kepler 3rd law via real-float orbit
