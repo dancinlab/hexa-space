@@ -5,6 +5,18 @@ All notable changes to **hexa-space** are documented here. Format follows
 
 ## [unreleased] - 2026-05-08
 
+### Added (2026-05-08 — RSC iter 3) — `astrodynamics/verify_astrodynamics.hexa`
+
+F-SPACE-1 T1 (algebraic) calc — Kepler 3rd law n=6 closed-forms.
+
+- 10-check arithmetic: master closure σ·φ = n·τ = J₂; orbit_dof = n = 6;
+  phase-space dim = 2n = σ = 12; T_GEO/T_LEO = σ·τ/3 = 16; (σ·τ/3)² =
+  256 = (a_GEO/a_LEO)³; J₂ = 24h sidereal day; LEO orbits/day =
+  σ·τ/3 = 16; τ = 4 mission phases; σ = 12-month launch window; φ = 2
+  crewed/uncrewed. Sentinel `__HEXA_ASTRODYNAMICS_VERIFY__ PASS` —
+  **10/10 EXACT**.
+- F-SPACE-1 closure pct lifts to 33% (T1 ✓; T2 + T3 pending).
+
 ### Added (2026-05-08 — RSC iter 2) — `verify/cross_doc_audit.hexa`
 
 Second cross-cutter under the RSC recipe — anchor-consistency audit
