@@ -247,6 +247,27 @@ fn cmd_group(a: [str]) {
 }
 
 // ─── verify dispatch (any verb with verify_<slug>.hexa) ───
+//
+// Two-tier resolution:
+//   1. cross-cutter scripts at top-level verify/ (RSC recipe §1):
+//        lattice → verify/lattice_check.hexa
+//      (cross-doc, falsifier, lint-numerics … to be added incrementally.)
+//   2. per-verb scripts in <verb>/verify_<verb>.hexa.
+
+let TOP_VERIFY_ALIASES: [str] = [
+    "lattice|verify/lattice_check.hexa",
+]
+
+fn _top_verify_path_for(slug: str) -> str {
+    for entry in TOP_VERIFY_ALIASES {
+        let parts = _split_pipe(entry)
+        if parts[0] == slug {
+            let p = HS + "/" + parts[1]
+            if _file_exists(p) { return p }
+        }
+    }
+    return ""
+}
 
 fn _verify_path_for(verb: str) -> str {
     // First location: aerospace/verify_aerospace.hexa style
@@ -265,20 +286,30 @@ fn _verify_path_for(verb: str) -> str {
 
 fn cmd_verify(a: [str]) {
     if a.len() < 4 {
-        eprintln("usage: hexa-space verify <verb>")
+        eprintln("usage: hexa-space verify <verb-or-cross-cutter>")
         eprintln("       hexa-space verify-all")
+        eprintln("       cross-cutters: lattice")
         exit(2)
     }
-    let verb = a[3]
-    let p = _verify_path_for(verb)
+    let slug = a[3]
+    // top-level cross-cutter (verify/<x>.hexa) takes priority
+    let pt = _top_verify_path_for(slug)
+    if pt.len() > 0 {
+        let cmd_t = "HEXA_SPACE_ROOT=" + shq(HS) + " hexa run " + shq(pt) + " 2>&1"
+        let out_t = exec(cmd_t)
+        println(out_t.trim())
+        _audit("verify " + slug, "", 0)
+        return
+    }
+    let p = _verify_path_for(slug)
     if p.len() == 0 {
-        eprintln("hexa-space verify: no verify_<verb>.hexa for '" + verb + "'")
+        eprintln("hexa-space verify: no verify_<verb>.hexa for '" + slug + "'")
         exit(2)
     }
     let cmd = "HEXA_SPACE_ROOT=" + shq(HS) + " hexa run " + shq(p) + " 2>&1"
     let out = exec(cmd)
     println(out.trim())
-    _audit("verify " + verb, "", 0)
+    _audit("verify " + slug, "", 0)
 }
 
 fn cmd_verify_all(a: [str]) {
@@ -553,6 +584,7 @@ fn cmd_help() {
     println("  selftest            canonical-verb presence sweep (11/11 expected)")
     println("  ops [verify-all]    operations-group registry / 16-verb verify sweep")
     println("  verify <verb>       run verify_<verb>.hexa for any registered verb")
+    println("  verify lattice      run verify/lattice_check.hexa (n=6 cross-pillar audit)")
     println("  verify-all          run every available verify_*.hexa across all 5 groups")
     println("  spacex <subcmd>     SpaceX 2026 program registry (intel/list/active/upcoming")
     println("                      group/show/counts/verify/mk) — see `hexa-space spacex help`")

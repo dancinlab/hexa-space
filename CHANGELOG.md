@@ -3,6 +3,30 @@
 All notable changes to **hexa-space** are documented here. Format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and SemVer.
 
+## [unreleased] - 2026-05-08
+
+### Added (2026-05-08 — RSC iter 1) — top-level `verify/` cross-cutter
+
+Initial application of the **Runnable Surface Construction** (RSC) recipe
+from `bedrock/docs/runnable_surface_recipe.md` (hexa-cern v1.1.0-pre
+provenance). Begins closure-depth accumulation against `.roadmap.hexa_space
+§A.4` falsifier preregister (F-SPACE-1/2/3/4).
+
+- `verify/lattice_check.hexa` — repo-overall n=6 invariant audit covering
+  arithmetic closure (σ·φ = n·τ = J₂ = 24), σ²/payload-band/Super-Heavy
+  Raptor identities, roadmap §A.1 lattice declarations, §A.4 falsifier
+  preregister, canonical-pillar n=6 lattice tokens (cosmic / starship /
+  astrodynamics / astronomy / obs_astronomy / astrobiology / medicine),
+  J₂ cross-pillar token sweep (≥ 6 of 11 hits), 16/16 ops `verify_*.hexa`
+  presence, and `hexa.toml [closure]` raw#10 C3 honesty.
+  Sentinel `__HEXA_SPACE_LATTICE__ PASS` — **24/24 EXACT**.
+- `cli/hexa-space.hexa` — `verify` subcmd extended with cross-cutter
+  resolution (`TOP_VERIFY_ALIASES`); `verify lattice` proxies the new
+  `verify/lattice_check.hexa`. Per-verb `verify <verb>` path unchanged.
+- `tests/test_lattice.hexa` — regression guard: direct + cli-proxy both
+  must emit `__HEXA_SPACE_LATTICE__ PASS`.
+- `hexa.toml [test].files` — `tests/test_lattice.hexa` registered (4/4).
+
 ## [unreleased] - 2026-05-07
 
 ### Added — `operations` extension group (16 new verbs)

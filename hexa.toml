@@ -28,6 +28,7 @@ files = [
     "tests/test_selftest.hexa",
     "tests/test_spacex.hexa",
     "tests/test_ops.hexa",
+    "tests/test_lattice.hexa",
 ]
 
 # ── hx install hook ───────────────────────────────────────
