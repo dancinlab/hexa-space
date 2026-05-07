@@ -259,6 +259,8 @@ let TOP_VERIFY_ALIASES: [str] = [
     "cross-doc|verify/cross_doc_audit.hexa",
     "numerics-kepler|verify/numerics_kepler.hexa",
     "numerics-falcon|verify/numerics_falcon.hexa",
+    "numerics-starship|verify/numerics_starship.hexa",
+    "numerics-bone-loss|verify/numerics_bone_loss.hexa",
 ]
 
 fn _top_verify_path_for(slug: str) -> str {
@@ -294,7 +296,7 @@ fn cmd_verify(a: [str]) {
     if a.len() < 4 {
         eprintln("usage: hexa-space verify <verb-or-cross-cutter>")
         eprintln("       hexa-space verify-all")
-        eprintln("       cross-cutters: lattice | cross-doc | numerics-{kepler,falcon}")
+        eprintln("       cross-cutters: lattice | cross-doc | numerics-{kepler,falcon,starship,bone-loss}")
         exit(2)
     }
     let slug = a[3]
@@ -594,6 +596,8 @@ fn cmd_help() {
     println("  verify cross-doc    run verify/cross_doc_audit.hexa (anchor consistency)")
     println("  verify numerics-kepler  run verify/numerics_kepler.hexa (F-SPACE-1 T2)")
     println("  verify numerics-falcon  run verify/numerics_falcon.hexa (F-SPACE-2 T2)")
+    println("  verify numerics-starship    run verify/numerics_starship.hexa (F-SPACE-4 T2)")
+    println("  verify numerics-bone-loss   run verify/numerics_bone_loss.hexa (F-SPACE-3 T2)")
     println("  verify-all          run every available verify_*.hexa across all 5 groups")
     println("  spacex <subcmd>     SpaceX 2026 program registry (intel/list/active/upcoming")
     println("                      group/show/counts/verify/mk) — see `hexa-space spacex help`")

@@ -5,6 +5,37 @@ All notable changes to **hexa-space** are documented here. Format follows
 
 ## [unreleased] - 2026-05-08
 
+### Added (2026-05-08 — RSC iter 8) — `verify/numerics_bone_loss.hexa`
+
+F-SPACE-3 first T2 (numerical) — exponential bone-density decay model
+for ISS microgravity exposure + τ=4-phase recovery vs NASA HRP / Twin
+Study published bands.
+
+- `verify/numerics_bone_loss.hexa` — math_pure-only floats. 8/8 PASS:
+  linear loss n × 1%/mo = n% (= 6); exp-decay BMD(6mo)/BMD₀ ≈ 0.942
+  (5.82% loss within HRP [5, 7]%); τ=4-phase post-flight ≈ 1
+  half-life of recovery exp (Sibonga 2007 t½ = 6 mo); 6 NASA HRP
+  risk areas; J₂ = 24-week expedition; n×τ = J₂ = 24 monitoring cells;
+  master closure floor; log_pure ∘ exp_pure round-trip < 1e-9.
+  Sentinel `__HEXA_SPACE_NUMERICS_BONE_LOSS__ PASS`.
+- F-SPACE-3 closure pct lifts to **67%** (T1 ✓ + T2 ✓).
+
+### Added (2026-05-08 — RSC iter 7) — `verify/numerics_starship.hexa`
+
+F-SPACE-4 first T2 (numerical) — Super Heavy 33-Raptor cluster
+(σ·n/φ − 3 = 33) thrust budget + Tsiolkovsky Δv vs SpaceX 2024+ specs.
+
+- `verify/numerics_starship.hexa` — math_pure-only floats. 9/9 PASS:
+  cluster σ·n/φ − 3 = 33; ring partition 3+10+20 (outer = J₂−τ = 20);
+  ship engines = n = 6; cluster total thrust 33·2640 kN ≈ 87 MN
+  (catalog 87); booster Δv ≈ 3.7 km/s within [1.5, 4.0] (full
+  ship+payload stack); V3 LEO payload σ·τ·2 = 96 t; tile classes
+  J₂² = 576; closure floor; sqrt_pure(2) within 1e-6. Sentinel
+  `__HEXA_SPACE_NUMERICS_STARSHIP__ PASS`.
+- F-SPACE-4 closure pct lifts to **67%** (T1 ✓ + T2 ✓).
+- All 4 falsifiers (1/2/3/4) now satisfy **sat-1**: 67% closure each
+  (T1 + T2 ✓; T3 hardware-only — recipe §9 Stage-1+).
+
 ### Added (2026-05-08 — RSC iter 6) — `verify/numerics_falcon.hexa`
 
 F-SPACE-2 first T2 (numerical) — Falcon 9 octaweb 9-engine layout +
