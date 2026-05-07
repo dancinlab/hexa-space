@@ -1,11 +1,19 @@
 # 🚀 hexa-space — Space Toolkit (HEXA family)
 
-> **11-verb space substrate** organized in **4 groups** —
-> **core** (cosmic, starship) · **engineering** (aerospace, aerospace_transport,
-> engineering, systems) · **observation** (astrodynamics, astronomy,
-> obs_astronomy) · **life** (astrobiology, medicine). All 11 verbs ship as
-> spec-first design docs at v1.0.0; working `.hexa` CLI dispatcher is a
-> placeholder.
+> **27-verb space substrate** organized in **5 groups** — 11 canonical
+> + **16 operations extension** (drafted from SpaceX intel 2026-05-07):
+> - **core** (cosmic, starship)
+> - **engineering** (aerospace, aerospace_transport, engineering, systems)
+> - **observation** (astrodynamics, astronomy, obs_astronomy)
+> - **life** (astrobiology, medicine)
+> - **operations (ext, 16)** (spaceship · satellite · space_center ·
+>   space_ai_center · space_datacenter · falcon · dragon · recovery ·
+>   orbital_depot · hls · starlink · rideshare · station · mars_base ·
+>   direct_to_cell · mondaloy)
+>
+> Canonical 11 ship as spec-first design docs (placeholder dispatcher);
+> ops 16 ship as **spec + verify_*.hexa lattice-closure script**
+> (16/16 emit `__HEXA_<VERB>_VERIFY__ PASS`).
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-1.0.0-informational.svg)](CHANGELOG.md)
@@ -88,6 +96,42 @@ master identity:   σ · φ = n · τ = 12 · 2 = 6 · 4 = 24
 |----------------|-------------------------|------------------------------------|
 | `astrobiology` | `space/astrobiology/`   | `astrobiology/astrobiology.md`     |
 | `medicine`     | `space/space-medicine/` | `medicine/space-medicine.md`       |
+
+### operations (ext, 16) — drafted from SpaceX intel 2026-05-07
+
+Pending upstream landing in `n6-architecture/domains/space/`. Each verb
+ships with a spec MD + `verify_<verb>.hexa` lattice-closure script.
+
+| Verb | Spec file | Verify | Domain anchor |
+|------|-----------|--------|---------------|
+| `spaceship` | `spaceship/spaceship.md` | `verify_spaceship.hexa` | Starship vehicle |
+| `satellite` | `satellite/satellite.md` | `verify_satellite.hexa` | Starlink + Dragon platform |
+| `space_center` | `space_center/space_center.md` | `verify_space_center.hexa` | ground ops centers |
+| `space_ai_center` | `space_ai_center/space_ai_center.md` | `verify_space_ai_center.hexa` | autonomy + Optimus |
+| `space_datacenter` | `space_datacenter/space_datacenter.md` | `verify_space_datacenter.hexa` | orbital edge compute |
+| `falcon` | `falcon/falcon.md` | `verify_falcon.hexa` | Falcon 9 + FH |
+| `dragon` | `dragon/dragon.md` | `verify_dragon.hexa` | Crew + Cargo Dragon |
+| `recovery` | `recovery/recovery.md` | `verify_recovery.hexa` | drone-ship + chopstick |
+| `orbital_depot` | `orbital_depot/orbital_depot.md` | `verify_orbital_depot.hexa` | propellant transfer |
+| `hls` | `hls/hls.md` | `verify_hls.hexa` | Artemis HLS Starship variant |
+| `starlink` | `starlink/starlink.md` | `verify_starlink.hexa` | constellation service |
+| `rideshare` | `rideshare/rideshare.md` | `verify_rideshare.hexa` | Transporter + Bandwagon |
+| `station` | `station/station.md` | `verify_station.hexa` | Vast Haven-1 + Axiom |
+| `mars_base` | `mars_base/mars_base.md` | `verify_mars_base.hexa` | Mars settlement roadmap |
+| `direct_to_cell` | `direct_to_cell/direct_to_cell.md` | `verify_direct_to_cell.hexa` | DTC service (5G NR) |
+| `mondaloy` | `mondaloy/mondaloy.md` | `verify_mondaloy.hexa` | Ni-base superalloy (Raptor 3) |
+
+**Data feed:** `aerospace_transport/spacex_intel_2026.md` (SoT for the
+ops 16; web sweep 2026-05-07).
+
+**Run:**
+
+```bash
+hexa run cli/hexa-space.hexa ops verify-all      # 16/16 PASS
+hexa run cli/hexa-space.hexa verify <verb>       # any registered verb
+hexa run cli/hexa-space.hexa verify-all          # all 5 groups, full sweep
+hexa run cli/hexa-space.hexa spacex intel        # SpaceX 2026 snapshot path
+```
 
 ---
 

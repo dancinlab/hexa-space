@@ -26,6 +26,8 @@ path = "cli/hexa-space.hexa"
 runner = "hexa"
 files = [
     "tests/test_selftest.hexa",
+    "tests/test_spacex.hexa",
+    "tests/test_ops.hexa",
 ]
 
 # ── hx install hook ───────────────────────────────────────
@@ -34,11 +36,15 @@ files = [
 [scripts]
 install = "install.hexa"
 
-# ── Modules manifest (11 verbs / 4 groups) ─────────────────
+# ── Modules manifest (27 verbs / 5 groups) ─────────────────
 # core group (2):         cosmic, starship
 # engineering group (4):  aerospace, aerospace_transport, engineering, systems
 # observation group (3):  astrodynamics, astronomy, obs_astronomy
 # life group (2):         astrobiology, medicine
+# operations group (16):  spaceship, satellite, space_center, space_ai_center,
+#                         space_datacenter, falcon, dragon, recovery,
+#                         orbital_depot, hls, starlink, rideshare, station,
+#                         mars_base, direct_to_cell, mondaloy
 [modules]
 hexa = [
     # core
@@ -56,6 +62,25 @@ hexa = [
     # life
     "astrobiology/astrobiology.md",
     "medicine/space-medicine.md",
+    # operations (extension verbs — drafted from SpaceX intel 2026-05-07)
+    "spaceship/spaceship.md",
+    "satellite/satellite.md",
+    "space_center/space_center.md",
+    "space_ai_center/space_ai_center.md",
+    "space_datacenter/space_datacenter.md",
+    "falcon/falcon.md",
+    "dragon/dragon.md",
+    "recovery/recovery.md",
+    "orbital_depot/orbital_depot.md",
+    "hls/hls.md",
+    "starlink/starlink.md",
+    "rideshare/rideshare.md",
+    "station/station.md",
+    "mars_base/mars_base.md",
+    "direct_to_cell/direct_to_cell.md",
+    "mondaloy/mondaloy.md",
+    # data feed for ops group
+    "aerospace_transport/spacex_intel_2026.md",
 ]
 
 # ── Dependencies ───────────────────────────────────────────
@@ -64,14 +89,18 @@ hexa = [
 hexa-lang = ">=1.0.0"
 
 # ── Closure provenance (raw#10 honest C3) ─────────────────
-# v1.0.0 closure: 11/11 verbs ship as spec-only (.md) with placeholder
-# CLI dispatcher; no verb has a working empirical sandbox in this repo.
+# v1.0.0 (canonical): 11/11 verbs spec-only, dispatcher placeholder.
+# v1.1.0-ext (operations): 16/16 ops verbs spec + verify_*.hexa wired
+#   against the n=6 lattice. All 16 emit __HEXA_<VERB>_VERIFY__ PASS.
 [closure]
-verbs_total = 11
-verbs_spec = 11
-verbs_wired = 0
-verdict = "SPEC_ONLY"
+verbs_total = 27
+verbs_spec = 27
+verbs_wired = 16          # 16 ops verbs have verify_*.hexa lattice-closure scripts
+verbs_canonical = 11
+verbs_extension = 16
+verdict = "SPEC_PLUS_OPS_LATTICE"
 extracted_from = "n6-architecture/domains/space/ @ c0f1f570 (2026-05-06)"
+ops_extension_drafted = "2026-05-07 from spacex_intel_2026.md (no upstream landing yet)"
 
 # ── Scope honesty (raw#10 C3) ─────────────────────────────
 [scope]

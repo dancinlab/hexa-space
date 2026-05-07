@@ -26,6 +26,9 @@
 //   status     — verb status table (11 verbs / 4 groups, all SPEC)
 //   selftest   — verify all 11 verb specs present + sentinel
 //   group      — show verbs in a group: hexa-space group <core|engineering|observation|life>
+//   spacex     — SpaceX 2026 program registry analyzer (proxy to
+//                aerospace_transport/analyze_spacex.hexa) +
+//                verify subcmd → verify_spacex.hexa, mk subcmd → verify_mk_ladder.hexa
 //   help       — this help
 //   --version  — print version
 //
@@ -83,6 +86,31 @@ let VERBS_LIFE: [str] = [
     "medicine|medicine/space-medicine.md",
 ]
 
+// ─── extension verbs: operations group (16 verbs, draft from SpaceX intel) ───
+//
+// Source-of-truth for these is aerospace_transport/spacex_intel_2026.md.
+// Each verb has a spec MD + verify_*.hexa companion. Pending upstream
+// landing in n6-architecture/domains/space/<slug>/.
+
+let VERBS_OPERATIONS: [str] = [
+    "spaceship|spaceship/spaceship.md",
+    "satellite|satellite/satellite.md",
+    "space_center|space_center/space_center.md",
+    "space_ai_center|space_ai_center/space_ai_center.md",
+    "space_datacenter|space_datacenter/space_datacenter.md",
+    "falcon|falcon/falcon.md",
+    "dragon|dragon/dragon.md",
+    "recovery|recovery/recovery.md",
+    "orbital_depot|orbital_depot/orbital_depot.md",
+    "hls|hls/hls.md",
+    "starlink|starlink/starlink.md",
+    "rideshare|rideshare/rideshare.md",
+    "station|station/station.md",
+    "mars_base|mars_base/mars_base.md",
+    "direct_to_cell|direct_to_cell/direct_to_cell.md",
+    "mondaloy|mondaloy/mondaloy.md",
+]
+
 let LOG_PATH = HS + "/state/hexa_space_cli.log"
 
 // ─── arg helpers ───
@@ -109,21 +137,7 @@ fn _file_exists(p: str) -> bool {
 
 fn _split_pipe(s: str) -> [str] {
     // returns [verb_slug, spec_relpath]
-    let mut parts: [str] = []
-    let mut cur = ""
-    let mut i = 0
-    while i < s.len() {
-        let c = s.substr(i, i + 1)
-        if c == "|" {
-            parts = parts + [cur]
-            cur = ""
-        } else {
-            cur = cur + c
-        }
-        i = i + 1
-    }
-    parts = parts + [cur]
-    return parts
+    return s.split("|")
 }
 
 // ─── audit log (jsonl) ───
@@ -145,13 +159,15 @@ fn _audit(subcmd: str, args_str: str, exit_code: int) {
 fn _print_caveats() {
     println("")
     println("--- caveats (raw#10 C3) ---")
-    println("  1. SPEC_ONLY at v1.0.0 — all 11 verbs ship as .md design docs;")
-    println("     no working empirical sandbox in this repo. Working .hexa CLI TBD.")
-    println("  2. n=6 invariant lattice (σ=12, τ=4, φ=2, J₂=24) is hypothesized")
-    println("     for all 11 verbs; no independent in-repo verification.")
-    println("  3. Sister theory-side substrate lives at need-singularity/hexa-cosmos")
-    println("     (cosmology + particle + cosmic-observatory). starship sister at")
-    println("     need-singularity/hexa-ufo.")
+    println("  1. canonical 11 verbs ship as .md design docs (no empirical sandbox).")
+    println("     operations 16 verbs additionally ship verify_*.hexa lattice-closure")
+    println("     scripts that test n=6 BOOKKEEPING — not physics.")
+    println("  2. n=6 invariant lattice (σ=12, τ=4, φ=2, J₂=24) is hypothesized for")
+    println("     all canonical verbs and operationally fitted for ops verbs against")
+    println("     the SpaceX 2026 snapshot (aerospace_transport/spacex_intel_2026.md).")
+    println("  3. operations verbs are pending-upstream — not yet landed in")
+    println("     n6-architecture/domains/space/. Treat them as hexa-space drafts.")
+    println("  4. Sister substrates: hexa-cosmos (theory) · hexa-ufo (starship co-axis).")
 }
 
 // ─── verb iteration helpers ───
@@ -161,12 +177,14 @@ fn _group_label(g: str) -> str {
     if g == "engineering" { return "engineering (4)" }
     if g == "observation" { return "observation (3)" }
     if g == "life"        { return "life (2)" }
+    if g == "operations"  { return "operations (16, ext)" }
     return g
 }
 
 fn _verbs_for(g: str) -> [str] {
     if g == "core"        { return VERBS_CORE }
     if g == "engineering" { return VERBS_ENGINEERING }
+    if g == "operations"  { return VERBS_OPERATIONS }
     if g == "observation" { return VERBS_OBSERVATION }
     if g == "life"        { return VERBS_LIFE }
     return []
@@ -185,9 +203,9 @@ fn cmd_status(a: [str]) {
         return
     }
 
-    println("hexa-space " + VERSION + " status — 11-verb Space Toolkit (HEXA family) / 4 groups")
+    println("hexa-space " + VERSION + " status — 27-verb Space Toolkit (HEXA family) / 5 groups (11 canonical + 16 ext)")
     println("")
-    let groups: [str] = ["core", "engineering", "observation", "life"]
+    let groups: [str] = ["core", "engineering", "observation", "life", "operations"]
     for g in groups {
         println("  [" + _group_label(g) + "]")
         for entry in _verbs_for(g) {
@@ -200,7 +218,9 @@ fn cmd_status(a: [str]) {
         }
         println("")
     }
-    println("  verdict: SPEC_ONLY (11/11 verbs spec-only; 0/11 wired)")
+    println("  verdict: SPEC_PLUS_OPS_LATTICE")
+    println("    canonical: 11/11 spec  · 0/11 wired")
+    println("    operations: 16/16 spec · 16/16 wired (verify_*.hexa lattice-closure)")
     _print_caveats()
 }
 
@@ -224,6 +244,238 @@ fn cmd_group(a: [str]) {
         println("  " + parts[0] + "  ← " + parts[1])
     }
     _audit("group", g, 0)
+}
+
+// ─── verify dispatch (any verb with verify_<slug>.hexa) ───
+
+fn _verify_path_for(verb: str) -> str {
+    // First location: aerospace/verify_aerospace.hexa style
+    // Second location: engineering/verify_space-engineering.hexa style
+    // Generic: <verb>/verify_<verb>.hexa
+    let p_generic = HS + "/" + verb + "/verify_" + verb + ".hexa"
+    if _file_exists(p_generic) { return p_generic }
+    // Engineering verb has hyphenated filename
+    let p_eng = HS + "/engineering/verify_space-engineering.hexa"
+    if verb == "engineering" && _file_exists(p_eng) { return p_eng }
+    // Aerospace_transport has spacex/mk_ladder, return spacex as default
+    let p_at = HS + "/aerospace_transport/verify_spacex.hexa"
+    if verb == "aerospace_transport" && _file_exists(p_at) { return p_at }
+    return ""
+}
+
+fn cmd_verify(a: [str]) {
+    if a.len() < 4 {
+        eprintln("usage: hexa-space verify <verb>")
+        eprintln("       hexa-space verify-all")
+        exit(2)
+    }
+    let verb = a[3]
+    let p = _verify_path_for(verb)
+    if p.len() == 0 {
+        eprintln("hexa-space verify: no verify_<verb>.hexa for '" + verb + "'")
+        exit(2)
+    }
+    let cmd = "HEXA_SPACE_ROOT=" + shq(HS) + " hexa run " + shq(p) + " 2>&1"
+    let out = exec(cmd)
+    println(out.trim())
+    _audit("verify " + verb, "", 0)
+}
+
+fn cmd_verify_all(a: [str]) {
+    // Run every verify_*.hexa we can find across all 5 groups.
+    let groups: [str] = ["core", "engineering", "observation", "life", "operations"]
+    let mut total = 0
+    let mut passed = 0
+    let mut failed: [str] = []
+    let mut skipped: [str] = []
+
+    for g in groups {
+        for entry in _verbs_for(g) {
+            let parts = _split_pipe(entry)
+            let verb = parts[0]
+            total = total + 1
+            let p = _verify_path_for(verb)
+            if p.len() == 0 {
+                skipped = skipped + [verb]
+            } else {
+                let cmd = "HEXA_SPACE_ROOT=" + shq(HS) + " hexa run " + shq(p) + " 2>&1"
+                let out = exec(cmd)
+                let upper = "__HEXA_" + verb.to_upper().replace("_TRANSPORT", "X") + "_VERIFY__"
+                // Actually each script has its own sentinel — easier to just check for "PASS" in last lines.
+                let pass = out.contains("VERIFY__ PASS") || out.contains("EXACT")
+                if pass {
+                    passed = passed + 1
+                    println("  [OK]    " + verb)
+                } else {
+                    failed = failed + [verb]
+                    println("  [FAIL]  " + verb)
+                }
+            }
+        }
+    }
+
+    println("")
+    println("hexa-space verify-all summary")
+    println("  total verbs:  " + str(total))
+    println("  passed:       " + str(passed))
+    println("  failed:       " + str(failed.len()))
+    println("  no script:    " + str(skipped.len()))
+    if skipped.len() > 0 {
+        println("  (no verify_*.hexa: " + skipped.join(", ") + ")")
+    }
+    if failed.len() > 0 {
+        println("  failed verbs:  " + failed.join(", "))
+        _audit("verify-all", "fail=" + str(failed.len()), 1)
+        exit(1)
+    }
+    _audit("verify-all", "pass=" + str(passed), 0)
+}
+
+// ─── subcommand: ops (alias for `group operations`) ───
+
+fn cmd_ops(a: [str]) {
+    if a.len() < 4 {
+        // default: list ops verbs
+        println("hexa-space ops — operations group (16 extension verbs)")
+        for entry in VERBS_OPERATIONS {
+            let parts = _split_pipe(entry)
+            println("  " + parts[0] + "  ← " + parts[1])
+        }
+        return
+    }
+    let sub = a[3]
+    if sub == "list" {
+        for entry in VERBS_OPERATIONS {
+            let parts = _split_pipe(entry)
+            println(parts[0])
+        }
+        return
+    }
+    if sub == "verify-all" {
+        // ops-only sweep
+        let mut passed = 0
+        let mut failed: [str] = []
+        for entry in VERBS_OPERATIONS {
+            let parts = _split_pipe(entry)
+            let verb = parts[0]
+            let p = _verify_path_for(verb)
+            if p.len() == 0 {
+                failed = failed + [verb + " (no script)"]
+            } else {
+                let cmd = "HEXA_SPACE_ROOT=" + shq(HS) + " hexa run " + shq(p) + " 2>&1"
+                let out = exec(cmd)
+                if out.contains("VERIFY__ PASS") {
+                    passed = passed + 1
+                    println("  [OK]    " + verb)
+                } else {
+                    failed = failed + [verb]
+                    println("  [FAIL]  " + verb)
+                }
+            }
+        }
+        println("")
+        println("hexa-space ops verify-all: " + str(passed) + "/" + str(VERBS_OPERATIONS.len()))
+        if passed < VERBS_OPERATIONS.len() {
+            println("  failed: " + failed.join(", "))
+            exit(1)
+        }
+        return
+    }
+    eprintln("hexa-space ops: unknown subcmd '" + sub + "'")
+    eprintln("usage: hexa-space ops [list|verify-all]")
+    exit(2)
+}
+
+// ─── subcommand: spacex (proxy to aerospace_transport/* hexa scripts) ───
+
+fn _spacex_path(file: str) -> str {
+    return HS + "/aerospace_transport/" + file
+}
+
+fn _proxy_run(script: str, fwd: str) {
+    // Forwards to nested hexa script. Runtime quirks force us to use the
+    // shell wrapper which forwards args properly.
+    let p = _spacex_path(script)
+    let exists = exec("[ -f " + shq(p) + " ] && echo y || echo n").trim()
+    if exists != "y" {
+        eprintln("hexa-space spacex: missing companion script: " + p)
+        exit(2)
+    }
+    let cmd = "hexa run " + shq(p) + " " + fwd
+    let out = exec(cmd)
+    println(out.trim())
+}
+
+fn cmd_spacex(a: [str]) {
+    // a = ["hexa_space_cli","hexa_space_router","spacex", ...rest]
+    if a.len() < 4 {
+        cmd_spacex_help()
+        return
+    }
+    let sub = a[3]
+
+    // forward all subsequent args to the companion script
+    let mut fwd = ""
+    let mut i = 4
+    while i < a.len() {
+        fwd = fwd + " " + shq(a[i])
+        i = i + 1
+    }
+
+    if sub == "help" || sub == "--help" || sub == "-h" {
+        cmd_spacex_help()
+        return
+    }
+
+    // analyzer dispatch (analyze_spacex.hexa subcmds: list/active/upcoming/group/show/counts)
+    if sub == "list"     { _proxy_run("analyze_spacex.hexa", "list"     + fwd); _audit("spacex list",     "", 0); return }
+    if sub == "active"   { _proxy_run("analyze_spacex.hexa", "active"   + fwd); _audit("spacex active",   "", 0); return }
+    if sub == "upcoming" { _proxy_run("analyze_spacex.hexa", "upcoming" + fwd); _audit("spacex upcoming", "", 0); return }
+    if sub == "counts"   { _proxy_run("analyze_spacex.hexa", "counts"   + fwd); _audit("spacex counts",   "", 0); return }
+    if sub == "group"    { _proxy_run("analyze_spacex.hexa", "group"    + fwd); _audit("spacex group",    "", 0); return }
+    if sub == "show"     { _proxy_run("analyze_spacex.hexa", "show"     + fwd); _audit("spacex show",     "", 0); return }
+
+    // verify dispatch
+    if sub == "verify"   { _proxy_run("verify_spacex.hexa",    fwd.trim()); _audit("spacex verify", "", 0); return }
+    if sub == "mk"       { _proxy_run("verify_mk_ladder.hexa", fwd.trim()); _audit("spacex mk",     "", 0); return }
+
+    // intel — print path to the .md
+    if sub == "intel" {
+        let mdp = HS + "/aerospace_transport/spacex_intel_2026.md"
+        let exists = exec("[ -f " + shq(mdp) + " ] && echo y || echo n").trim()
+        if exists != "y" {
+            eprintln("hexa-space spacex intel: missing " + mdp)
+            exit(2)
+        }
+        println("hexa-space spacex intel — snapshot 2026-05-07")
+        println("  path: " + mdp)
+        println("  view: less " + mdp)
+        return
+    }
+
+    eprintln("hexa-space spacex: unknown subcmd '" + sub + "'")
+    cmd_spacex_help()
+    exit(2)
+}
+
+fn cmd_spacex_help() {
+    println("hexa-space spacex — SpaceX 2026 program registry (aerospace_transport verb)")
+    println("")
+    println("usage: hexa-space spacex <subcmd> [arg]")
+    println("")
+    println("  intel                       open the .md snapshot path")
+    println("  list                        all programs")
+    println("  active                      only active / recurring")
+    println("  upcoming                    only upcoming / development / contracted / infra / aspirational")
+    println("  group <slug>                filter by group (launch|crew|cargo|rideshare|")
+    println("                                               constellation|starship|gov|infra)")
+    println("  show <slug>                 detail view")
+    println("  counts                      status histogram")
+    println("  verify                      n=6 lattice cross-check (verify_spacex.hexa)")
+    println("  mk                          Mk-ladder future projection (verify_mk_ladder.hexa)")
+    println("  help                        this list")
+    println("")
+    println("source data: aerospace_transport/spacex_intel_2026.md (snapshot 2026-05-07)")
 }
 
 // ─── subcommand: selftest ───
@@ -287,15 +539,23 @@ fn cmd_help() {
     println("")
     println("usage: hexa-space <subcmd> [flags...]")
     println("")
-    println("group subcommands (4 groups · 11 verbs):")
+    println("group subcommands (5 groups · 27 verbs):")
     println("  group core          (2): cosmic, starship")
     println("  group engineering   (4): aerospace, aerospace_transport, engineering, systems")
     println("  group observation   (3): astrodynamics, astronomy, obs_astronomy")
     println("  group life          (2): astrobiology, medicine")
+    println("  group operations    (16, ext): spaceship, satellite, space_center, space_ai_center,")
+    println("                      space_datacenter, falcon, dragon, recovery, orbital_depot, hls,")
+    println("                      starlink, rideshare, station, mars_base, direct_to_cell, mondaloy")
     println("")
     println("utility subcommands:")
-    println("  status              11-verb status table + caveats")
-    println("  selftest            verb-spec presence sweep (11/11 expected)")
+    println("  status              27-verb status table + caveats")
+    println("  selftest            canonical-verb presence sweep (11/11 expected)")
+    println("  ops [verify-all]    operations-group registry / 16-verb verify sweep")
+    println("  verify <verb>       run verify_<verb>.hexa for any registered verb")
+    println("  verify-all          run every available verify_*.hexa across all 5 groups")
+    println("  spacex <subcmd>     SpaceX 2026 program registry (intel/list/active/upcoming")
+    println("                      group/show/counts/verify/mk) — see `hexa-space spacex help`")
     println("")
     println("global flags:")
     println("  --version           show version")
@@ -346,10 +606,14 @@ fn main() {
         return
     }
 
-    if sub == "help"     { cmd_help();         return }
-    if sub == "status"   { cmd_status(a);      return }
-    if sub == "group"    { cmd_group(a);       return }
-    if sub == "selftest" { cmd_selftest(a);    return }
+    if sub == "help"       { cmd_help();         return }
+    if sub == "status"     { cmd_status(a);      return }
+    if sub == "group"      { cmd_group(a);       return }
+    if sub == "selftest"   { cmd_selftest(a);    return }
+    if sub == "spacex"     { cmd_spacex(a);      return }
+    if sub == "ops"        { cmd_ops(a);         return }
+    if sub == "verify"     { cmd_verify(a);      return }
+    if sub == "verify-all" { cmd_verify_all(a);  return }
 
     eprintln("hexa-space: unknown subcommand '" + sub + "'")
     eprintln("run 'hexa-space help' for usage")
