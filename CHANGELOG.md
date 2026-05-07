@@ -5,6 +5,42 @@ All notable changes to **hexa-space** are documented here. Format follows
 
 ## [unreleased] - 2026-05-08
 
+### Added (2026-05-08 — RSC iter 9-13) — meta + closure-tracker + saturation
+
+Five-script bundle closing recipe §1 inventory and emitting the
+`__HEXA_SPACE_RSC_SATURATED__ STOP` self-signal. **sat-1 + sat-2 ✓** —
+loop self-terminates per recipe §7.2; T3 awaits Stage-1+ hardware
+(recipe §9).
+
+- iter 9 — `verify/falsifier_check.hexa` (closure-pct tracker, recipe
+  §3): F-SPACE-1/2/3/4 ladder report; **4/4 ≥ 67%**, min closure 67%.
+  Sentinel `__HEXA_SPACE_FALSIFIER_CHECK__ PASS`.
+- iter 10 — `verify/lint_numerics.hexa` (recipe §4 5-invariant lint):
+  audits each `verify/numerics_*.hexa` for math_pure import, sentinel,
+  FALSIFIERS array, exit(0), RUN/FAIL counters; plus `NUMERICS_SCRIPTS`
+  inventory == on-disk glob count. **31/31 PASS** (5 invariants ×
+  6 scripts + 1 count).
+- iter 11 — `verify/numerics_lattice_arithmetic.hexa` (math_pure
+  stability floor, shared cross-project per recipe §6.5): float ↔ int
+  cross-check at every n=6 lattice node, (σ−φ)^n = 10^6 via pow_pure,
+  sqrt/log/exp round-trip within 1e-12, perfect-number identity.
+  **12/12 PASS**. Sentinel `__HEXA_SPACE_NUMERICS_LATTICE_ARITHMETIC__
+  PASS`.
+- iter 12 — `verify/numerics_cross_pillar.hexa` (cross-pillar T2
+  anchor, recipe §1 #12): Kepler/astrodyn ratio agreement, Falcon
+  9-engine + Super Heavy 33-engine integer ↔ closed-form, ISS day ↔
+  GEO sidereal, master closure across all pillars. **8/8 PASS**.
+- iter 13 — `verify/saturation_check.hexa` (RSC self-stop probe,
+  recipe §7.3 + §7.5): emits `__HEXA_SPACE_RSC_SATURATED__ STOP` when
+  lint passes + inventory floor met + min F-* T2 stack ≥ 1. Currently
+  **STOP** triggered.
+- `cli/hexa-space.hexa` — five new `TOP_VERIFY_ALIASES` (`falsifier`,
+  `lint-numerics`, `saturation`, `numerics-lattice-arithmetic`,
+  `numerics-cross-pillar`); help/usage updated.
+- `tests/test_lattice.hexa` — extended to 11/11 cross-cutter sweep
+  (lattice + cross-doc + 6 numerics + 3 meta), each via direct +
+  cli-proxy.
+
 ### Added (2026-05-08 — RSC iter 8) — `verify/numerics_bone_loss.hexa`
 
 F-SPACE-3 first T2 (numerical) — exponential bone-density decay model
