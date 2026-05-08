@@ -92,3 +92,25 @@ Path to 100 % closure follows the **hexa-antimatter Phase C/D/E** template:
 
 Phase C+D land in `firmware/sim/` and `firmware/hdl/` respectively;
 Phase E remains gated on funding (estimated ≈ $25k / board procurement).
+
+### §A.6.2 Phase E procurement-prep (added 2026-05-08)
+
+Each Stage-1 controller ships per-board procurement docs in
+`firmware/board/<slug>/`:
+
+- `SCHEMATIC.md` — block diagram + key net list + power tree + decoupling
+- `BOM.csv` — line-item bill-of-materials with Digi-Key part numbers,
+  qty, unit price, extended price, prototype + qty-5 totals
+- `PCB.md` — stack-up + board outline + routing rules + impedance + EMC
+- `COMMISSIONING.md` — bench bring-up checklist with PASS/FAIL gates
+  and the **F-SPACE-N closure event** that flips T3 from ✗ to ✓
+- `<slug>.kicad_sch` — KiCad 7+ S-expression root-sheet skeleton
+  (opens cleanly; populate from SCHEMATIC.md §2)
+
+Stage-1 program total ≈ **$26 k** (5× boards each + tools, within §A.6
+~$25 k envelope; Vivado license shared across LAUNCH-01 + RAPTOR-01).
+
+Phase E completes the **closure path** documentation; Phase F (physical
+board procurement) remains funding-blocked. Once any single board
+arrives + Phase G commissioning passes its closure-event gate, the
+corresponding F-SPACE-N flips to 100 % closure (T1 ✓ + T2 ✓ + T3 ✓).

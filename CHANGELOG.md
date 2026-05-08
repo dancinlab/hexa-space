@@ -5,6 +5,55 @@ All notable changes to **hexa-space** are documented here. Format follows
 
 ## [unreleased] - 2026-05-08
 
+### Added (2026-05-08 — RSC iter 18) Phase E — board-level procurement prep
+
+Per-board schematic + BOM + PCB stack-up + commissioning checklist for
+all 4 Stage-1 controllers.  Closes the documentation portion of the
+T3 closure path; Phase F (physical board procurement) remains
+funding-blocked per .roadmap §A.6.
+
+`firmware/board/<slug>/` × 4 boards (orbit_01, launch_01, dxa_01, raptor_01).
+Per board:
+- `SCHEMATIC.md` — block diagram + key net list + power tree + decoupling
+  + connector pinout + compliance/safety
+- `BOM.csv` — line-item bill-of-materials with Digi-Key part numbers,
+  qty, unit price, extended price, prototype + qty-5 totals
+- `PCB.md` — stack-up (4-layer for STM32 boards, 8-layer for FPGA
+  boards) + outline + routing rules + impedance + EMC notes
+- `COMMISSIONING.md` — Phase E bench bring-up checklist with PASS/FAIL
+  gates + the **F-SPACE-N closure event** that flips T3 from ✗ to ✓
+  on successful bench validation
+- `<slug>.kicad_sch` — KiCad 7+ S-expression root-sheet skeleton
+  (opens cleanly in KiCad; populate from SCHEMATIC.md §2)
+- `orbit_01.kicad_pro` — additionally includes full KiCad project file
+  with design-rule classes (Default / Power / USB_Diff)
+
+Per-board cost (qty 5 procurement, ~25% volume break):
+- HEXA-ORBIT-01    ≈  $99 ea (STM32H7 + GPS + 12-b ADC + 16-b DAC + RS-485)
+- HEXA-LAUNCH-01   ≈ $1,849 ea (Zynq US+ XCZU7EV + HDMI capture + DDR4)
+- HEXA-DXA-01      ≈ $134 ea (STM32H7 + USB host + LCD + microSD)
+- HEXA-RAPTOR-01   ≈ $1,462 ea (Kintex US XCKU040 + HDMI + 33-ch deconv)
+- **Stage-1 program total ≈ $26 k** (qty 5 each + Vivado license),
+  within .roadmap §A.6 ~$25 k envelope.
+
+Top-level `firmware/board/README.md` indexes the 4 boards + KiCad
+workflow + closure-path summary (Phase A → H).
+
+`verify/board_audit.hexa` (new meta cross-cutter) — verifies all
+4 boards ship the required 5 docs each, BOM has TOTAL_BOARD line,
+SCHEMATIC cites HEXA_REG_ID = 0x060C0402 master closure register,
+COMMISSIONING declares F-SPACE-N closure event gate.  **32/32 PASS**.
+Sentinel `__HEXA_SPACE_BOARD_AUDIT__ PASS`.
+
+`cli/hexa-space.hexa` — `board-audit` alias added.
+
+`.roadmap.hexa_space §A.6.2` — Phase E procurement-prep section with
+per-board file map + total cost summary + Phase F funding gate
+explicit-callout.
+
+Per recipe §9: documentation-only artifacts; T3 stays ✗ in
+`falsifier_check.hexa` until Phase F→G→H commissioning event lands.
+
 ### Added (2026-05-08 — RSC iter 14-17) Phase C/D — Stage-1+ T3 closure path
 
 Post-saturation extension per recipe §7.7 explicit-user-direction
