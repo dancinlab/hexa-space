@@ -5,6 +5,61 @@ All notable changes to **hexa-space** are documented here. Format follows
 
 ## [unreleased] - 2026-05-08
 
+### Added (2026-05-08 — RSC iter 14-17) Phase C/D — Stage-1+ T3 closure path
+
+Post-saturation extension per recipe §7.7 explicit-user-direction
+exception.  Mirrors hexa-antimatter Phase C/D template adapted for
+hexa-space's 4 falsifiers (F-SPACE-1/2/3/4).  **Phase E (physical board)
+remains funding-blocked** — recipe §9 boundary preserved.
+
+- `.roadmap.hexa_space §A.6` — Stage-1+ T3 closure path documented;
+  §A.6.1 Stage-1 controller catalog (HEXA-ORBIT-01 / LAUNCH-01 /
+  DXA-01 / RAPTOR-01) with target boards (STM32H7 / Zynq US+ /
+  Kintex US).
+- `firmware/sim/orbit_pipeline.hexa` (HEXA-ORBIT-01, F-SPACE-1) —
+  STM32H7 7-state machine (IDLE → TLE_LOAD → EPHEMERIS_READ →
+  KEPLER_INTEGRATE → COMPARE → TELEMETRY → SAFE).  SYSCLK = J₂·σ·sopfr/3
+  = 480 MHz · 12-bit ADC · σ·τ = 48 ephemeris steps · ≤ 100 ms safety
+  interlock · Mercury 43″/century within ±0.1% · leapfrog ↔ closed-form
+  agreement < 1e-3.  Sentinel `__HEXA_SPACE_FW_ORBIT_01__ PASS` —
+  **13/13 PASS**.
+- `firmware/sim/launch_telemetry.hexa` (HEXA-LAUNCH-01, F-SPACE-2) —
+  Zynq US+ XCZU7EV 7-state machine for Falcon 9 webcast Δv pipeline.
+  HDMI 1080p60 (fps = 5·σ) · 16-bit ADC · σ·n/φ = 36 Hz OCR · per-frame
+  latency < J₂ ms · Tsiolkovsky Δv ≈ 3.18 km/s ∈ booster band ·
+  σ−n+3 = 9 octaweb anchor · ≤ 50 ms interlock.  **11/11 PASS**.
+- `firmware/sim/dxa_pipeline.hexa` (HEXA-DXA-01, F-SPACE-3) —
+  STM32H7 6-state machine (n states; IDLE → SCAN_LOAD → PARSE → FIT
+  → COMPARE → REPORT).  USB 2.0 = σ Mbps floor · τ = 4 fit segments
+  (Sibonga 2007) · exp(-λ·t½) = 0.5 half-life identity · J₂ = 24 wk
+  Twin Study window · n×τ = J₂ monitoring matrix · ≤ 200 ms interlock.
+  **11/11 PASS**.
+- `firmware/sim/raptor_cluster.hexa` (HEXA-RAPTOR-01, F-SPACE-4) —
+  Kintex US XCKU040 7-state machine for Starship 33-Raptor cluster
+  ingest.  σ·n/φ−3 = 33 cluster · ring partition 3+10+20 (outer =
+  J₂−τ = 20) · HDMI 1080p60 · 33-channel deconv array · σ·τ·2 = 96 t
+  V3 payload validator · J₂² = 576 tile classes · Tsiolkovsky Δv
+  ≈ 3.7 km/s · ≤ 50 ms interlock.  **11/11 PASS**.
+- `firmware/hdl/{orbit_pipeline,launch_telemetry,dxa_pipeline,raptor_cluster}.v` —
+  Phase D synthesizable Verilog top-level skeletons (Vivado 2024.1+
+  for `xc7z020` / `xczu7ev` / `xcku040` and Cube.ai HLS shim for
+  STM32H7).  Encodes `HEXA_REG_ID = 32'h060C_0402` (n·σ·τ·φ packed).
+  **Compiles** but **not flashable** until Phase E boards arrive.
+- `firmware/doc/README.md` — Phase C/D scope + Phase E readiness
+  checklist + per-controller spec map.
+- `cli/hexa-space.hexa` — four new `fw-*` aliases (`orbit`, `launch`,
+  `dxa`, `raptor`).
+- `tests/test_firmware.hexa` — Phase C regression sweep (4/4
+  sentinels green).
+- `hexa.toml [test].files` — `tests/test_firmware.hexa` registered (5/5).
+
+Phase C+D total: **8 new files** (4 sims + 4 HDL) + 1 doc + 1 test +
+3 wiring updates + 1 roadmap section.  46/46 sim-firmware checks PASS;
+all four Phase D HDL files written to Verilog 2001 syntax with explicit
+`mmcm_locked` reset gating + safety interlock counters dimensioned to
+each board's clock rate.  Recipe §9 boundary holds: T3 stays ✗ until
+Phase E hardware lands.
+
 ### Added (2026-05-08 — RSC iter 9-13) — meta + closure-tracker + saturation
 
 Five-script bundle closing recipe §1 inventory and emitting the

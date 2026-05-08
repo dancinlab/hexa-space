@@ -58,3 +58,37 @@ DoD:
 - 4-그룹 의 .hexa CLI dispatch 우선순위 (observation 먼저 vs engineering 먼저).
 - hexa-scope 와의 obs_astronomy verb 중복 처리 (scope에 specialize fork).
 - ISS health data ToS / privacy issue 사전 확인.
+
+## §A.6 Stage-1+ T3 closure path (post-RSC saturation)
+
+RSC loop saturated 2026-05-08 (recipe §7.2 sat-1 + sat-2 ✓). All four
+preregistered falsifiers (F-SPACE-1/2/3/4) reach 67 % closure (T1 ✓ + T2 ✓).
+T3 (empirical hardware feed) is the only remaining tier — out of recipe
+scope per §9 since it cannot be closed by adding `.hexa` scripts alone.
+
+Path to 100 % closure follows the **hexa-antimatter Phase C/D/E** template:
+
+| Phase | Layer | Artefact | hexa-space scope |
+|:------|:------|:---------|:-----------------|
+| **C** | sim-firmware | `firmware/sim/<name>.hexa` state-machine + DAC/ADC pipeline + safety interlock verification | 4 controllers — one per F-SPACE-N |
+| **D** | HDL skeleton | `firmware/hdl/<name>.v` Verilog top-level (Vivado synthesis OK; not flashable) | 4 FPGA boards (Xilinx UltraScale+ family / STM32H7 MCU) |
+| **E** | physical board | actual silicon (procured / fabricated) + bench validation | ✗ funding-blocked |
+
+### §A.6.1 Stage-1 controller catalog (Phase C/D targets)
+
+- **HEXA-ORBIT-01** (F-SPACE-1) — Mercury perihelion advance pipeline.
+  STM32H7 + USNO MICA ephemeris reader + Kepler integrator. Validates
+  43″/century anomaly via numerical comparison to GR + n=6 closed-form.
+- **HEXA-LAUNCH-01** (F-SPACE-2) — Falcon 9 webcast telemetry capture.
+  Xilinx Zynq UltraScale+ (XCZU7EV) + HDMI 1080p capture + on-screen
+  T+/altitude/velocity OCR + Tsiolkovsky Δv reconstruction.
+- **HEXA-DXA-01** (F-SPACE-3) — bone-density timeseries fitter.
+  STM32H7 + USB DXA scanner data parser + τ=4 phase exp-decay fit
+  (Sibonga 2007 t½ = 6 mo) + NASA Twin Study comparator.
+- **HEXA-RAPTOR-01** (F-SPACE-4) — Starship cluster telemetry ingester.
+  Xilinx Kintex UltraScale (XCKU040) + same OCR pipeline as LAUNCH-01
+  re-targeted to Starship webcast overlay (33-Raptor stage-1 burn) +
+  σ·n/φ−3 = 33 cluster-scaling validation.
+
+Phase C+D land in `firmware/sim/` and `firmware/hdl/` respectively;
+Phase E remains gated on funding (estimated ≈ $25k / board procurement).

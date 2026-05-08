@@ -29,6 +29,7 @@ files = [
     "tests/test_spacex.hexa",
     "tests/test_ops.hexa",
     "tests/test_lattice.hexa",
+    "tests/test_firmware.hexa",
 ]
 
 # ── hx install hook ───────────────────────────────────────
