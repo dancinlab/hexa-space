@@ -22,7 +22,7 @@
 [![Verbs: 27](https://img.shields.io/badge/verbs-27_(11_canonical_+_16_ops)-blue.svg)](#verbs)
 [![Wired: 16/27](https://img.shields.io/badge/wired-16%2F27_(16%2F16_ops_+_0%2F11_canonical)-green.svg)](#verbs)
 [![Groups: 5](https://img.shields.io/badge/groups-core_·_engineering_·_observation_·_life_·_operations-purple.svg)](#verbs)
-[![Provenance: n6@c0f1f570](https://img.shields.io/badge/provenance-n6--architecture@c0f1f570-blue.svg)](https://github.com/need-singularity/n6-architecture)
+[![Provenance: n6@c0f1f570](https://img.shields.io/badge/provenance-n6--architecture@c0f1f570-blue.svg)](https://github.com/dancinlab/n6-architecture)
 [![Tests: 32/32 PASS](https://img.shields.io/badge/tests-32%2F32_PASS_(11+5+16)-success.svg)](#verifying)
 
 ---
@@ -284,7 +284,7 @@ hexa-space --version           # → 1.0.0
 ### Via git clone (works today)
 
 ```bash
-git clone https://github.com/need-singularity/hexa-space.git ~/.hexa-space
+git clone https://github.com/dancinlab/hexa-space.git ~/.hexa-space
 export HEXA_SPACE_ROOT=~/.hexa-space
 export PATH="$HEXA_SPACE_ROOT/cli:$PATH"
 
@@ -306,10 +306,10 @@ scripts are pure hexa-lang (raw#9 STRICT — no Python).
 
 ## Cross-link
 
-- **Sister theory-side substrate**: [`need-singularity/hexa-cosmos`](https://github.com/need-singularity/hexa-cosmos) — cosmology + particle + cosmic-observatory (theory companion to this engineering / observation / life axis).
-- **Sister starship axis**: [`need-singularity/hexa-ufo`](https://github.com/need-singularity/hexa-ufo) — extends the `starship` verb with anomaly-vehicle modeling.
-- **Sister biology axis**: [`need-singularity/hexa-bio`](https://github.com/need-singularity/hexa-bio) — molecular toolkit (weave/nanobot/ribozyme/virocapsid).
-- **Upstream SSOT (canonical specs)**: `n6-architecture/domains/space/` (sha [`c0f1f570`](https://github.com/need-singularity/n6-architecture/commit/c0f1f570)).
+- **Sister theory-side substrate**: [`dancinlab/hexa-cosmos`](https://github.com/dancinlab/hexa-cosmos) — cosmology + particle + cosmic-observatory (theory companion to this engineering / observation / life axis).
+- **Sister starship axis**: [`dancinlab/hexa-ufo`](https://github.com/dancinlab/hexa-ufo) — extends the `starship` verb with anomaly-vehicle modeling.
+- **Sister biology axis**: [`dancinlab/hexa-bio`](https://github.com/dancinlab/hexa-bio) — molecular toolkit (weave/nanobot/ribozyme/virocapsid).
+- **Upstream SSOT (canonical specs)**: `n6-architecture/domains/space/` (sha [`c0f1f570`](https://github.com/dancinlab/n6-architecture/commit/c0f1f570)).
 - **Operations data feed**: [`aerospace_transport/spacex_intel_2026.md`](aerospace_transport/spacex_intel_2026.md) — SpaceX 2026 active+upcoming program registry (web sweep 2026-05-07; 30+ sources cited in §5 of that file).
 
 ---

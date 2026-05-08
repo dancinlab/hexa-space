@@ -574,7 +574,7 @@ fn cmd_version() {
     println("hexa-space " + VERSION)
     println("standalone Space Toolkit (HEXA family — extracted from n6-architecture@c0f1f570 2026-05-06)")
     println("license: MIT")
-    println("repo:    https://github.com/need-singularity/hexa-space")
+    println("repo:    https://github.com/dancinlab/hexa-space")
 }
 
 // ─── help ───

@@ -24,7 +24,7 @@ the working `.hexa` CLI dispatcher is a placeholder.
   empirical verification at v1.0.0 — see Honest scope §3).
 - **MIT** license; **zero** runtime deps (no Python, no native build).
 - **GitHub-only distribution** — canonical at
-  <https://github.com/need-singularity/hexa-space>.
+  <https://github.com/dancinlab/hexa-space>.
 
 ## Installation
 
@@ -34,7 +34,7 @@ hx install hexa-space@1.0.0
 hexa-space --version           # → 1.0.0
 
 # Or git clone (works today):
-git clone https://github.com/need-singularity/hexa-space.git ~/.hexa-space
+git clone https://github.com/dancinlab/hexa-space.git ~/.hexa-space
 export HEXA_SPACE_ROOT=~/.hexa-space
 export PATH="$HEXA_SPACE_ROOT/cli:$PATH"
 hexa-space selftest

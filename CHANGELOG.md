@@ -276,7 +276,7 @@ verify_*.hexa companion. **16/16 emit `__HEXA_<VERB>_VERIFY__ PASS`.**
   Python deps).
 - MIT license, README, CHANGELOG, hexa.toml manifest.
 - GitHub-only distribution (canonical at
-  <https://github.com/need-singularity/hexa-space>).
+  <https://github.com/dancinlab/hexa-space>).
 
 ### Honest scope (raw#10 C3)
 - 11/11 verbs ship as **spec-only** (`.md` design docs).
@@ -294,4 +294,4 @@ verify_*.hexa companion. **16/16 emit `__HEXA_<VERB>_VERIFY__ PASS`.**
   (4 verbs, biology); `hexa-cosmos` (theory side, cosmology + particle +
   cosmic-observatory); `hexa-ufo` (starship co-axis).
 
-[1.0.0]: https://github.com/need-singularity/hexa-space/releases/tag/v1.0.0
+[1.0.0]: https://github.com/dancinlab/hexa-space/releases/tag/v1.0.0
