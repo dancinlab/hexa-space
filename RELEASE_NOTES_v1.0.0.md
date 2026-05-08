@@ -77,3 +77,28 @@ hexa-space group life                  # astrobiology, medicine
 MIT — see [LICENSE](LICENSE).
 
 Author: 박민우 <nerve011235@gmail.com>
+
+---
+
+## Post-v1.0.0 trajectory (informational — not part of this release)
+
+The repo has continued evolving past v1.0.0 along the
+[`bedrock/docs/runnable_surface_recipe.md`](https://github.com/dancinlab/bedrock)
+template.  Working tree state tracked in [`CHANGELOG.md`](CHANGELOG.md)
+`[unreleased]` section + [`.roadmap.hexa_space §A.6`](.roadmap.hexa_space):
+
+- **2026-05-07 — operations extension** (16 SpaceX-domain verbs landed;
+  `cli/hexa-space.hexa` extended with `ops verify-all` 16/16).
+- **2026-05-08 — RSC saturation** (sat-1 + sat-2 reached; all 4
+  preregistered F-SPACE-* falsifiers at 67 % closure via 12 cross-cutter
+  scripts in [`verify/`](verify/) + 5 test harnesses in [`tests/`](tests/)).
+- **2026-05-08 — Phase C/D Stage-1+ T3 closure path** (4 sim-firmware
+  state-machine controllers in [`firmware/sim/`](firmware/sim/) + 4
+  Vivado-synth Verilog HDL skeletons in [`firmware/hdl/`](firmware/hdl/)).
+- **2026-05-08 — Phase E procurement-prep** (4 per-board doc bundles
+  in [`firmware/board/`](firmware/board/) — schematic + BOM + PCB +
+  commissioning + KiCad-readable `.kicad_sch`; ~$26 k Stage-1 program).
+
+Phase F (physical board procurement) remains funding-gated; v1.1.0
+release tag will land once Phase F→G→H closure event flips at least
+one F-SPACE-N to 100 % on real silicon.
