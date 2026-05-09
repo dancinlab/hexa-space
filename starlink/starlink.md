@@ -1,6 +1,6 @@
 <!-- @canonical: pending-upstream:domains/space/starlink/starlink.md -->
 <!-- @extracted: 2026-05-07 -->
-<!-- @origin: hexa-space@local-draft (n6-architecture upstream pending) -->
+<!-- @origin: hexa-space@local-draft (canon upstream pending) -->
 <!-- @group: operations (extension verb) -->
 
 # 🛰️ hexa-starlink — n=6 Starlink constellation service verb

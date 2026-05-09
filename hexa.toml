@@ -2,8 +2,8 @@
 #
 # Spec: shared/hexa-lang/hexa-toml-spec.json (version 1.0.0)
 # Distribution target: hx install hexa-space
-# Provenance: extracted from n6-architecture/domains/space/ on 2026-05-06
-#             (sha c0f1f570 — n6-architecture sister)
+# Provenance: extracted from canon/domains/space/ on 2026-05-06
+#             (sha c0f1f570 — canon sister)
 
 [package]
 name = "hexa-space"
@@ -101,7 +101,7 @@ verbs_wired = 16          # 16 ops verbs have verify_*.hexa lattice-closure scri
 verbs_canonical = 11
 verbs_extension = 16
 verdict = "SPEC_PLUS_OPS_LATTICE"
-extracted_from = "n6-architecture/domains/space/ @ c0f1f570 (2026-05-06)"
+extracted_from = "canon/domains/space/ @ c0f1f570 (2026-05-06)"
 ops_extension_drafted = "2026-05-07 from spacex_intel_2026.md (no upstream landing yet)"
 
 # ── Scope honesty (raw#10 C3) ─────────────────────────────

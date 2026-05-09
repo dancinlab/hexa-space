@@ -1,6 +1,6 @@
 <!-- @canonical: pending-upstream:domains/space/falcon/falcon.md -->
 <!-- @extracted: 2026-05-07 -->
-<!-- @origin: hexa-space@local-draft (n6-architecture upstream pending) -->
+<!-- @origin: hexa-space@local-draft (canon upstream pending) -->
 <!-- @group: operations (extension verb) -->
 
 # 🚀 hexa-falcon — n=6 Falcon-family rocket verb

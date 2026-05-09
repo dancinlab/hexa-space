@@ -1,6 +1,6 @@
 <!-- @canonical: pending-upstream:domains/space/spaceship/spaceship.md -->
 <!-- @extracted: 2026-05-07 -->
-<!-- @origin: hexa-space@local-draft (n6-architecture upstream pending) -->
+<!-- @origin: hexa-space@local-draft (canon upstream pending) -->
 <!-- @group: operations (extension verb) -->
 
 # 🚀 hexa-spaceship — n=6 reusable spaceship integration verb
@@ -67,4 +67,4 @@ counts collapse onto the n=6 lattice without rounding:
 
 - Drafted 2026-05-07 from `aerospace_transport/spacex_intel_2026.md`
   Starship V3 / Flight 12 / pad-2 / Mars-2026 entries.
-- Pending upstream landing in `n6-architecture/domains/space/spaceship/`.
+- Pending upstream landing in `canon/domains/space/spaceship/`.

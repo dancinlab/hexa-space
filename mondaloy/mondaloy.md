@@ -1,6 +1,6 @@
 <!-- @canonical: pending-upstream:domains/space/mondaloy/mondaloy.md -->
 <!-- @extracted: 2026-05-07 -->
-<!-- @origin: hexa-space@local-draft (n6-architecture upstream pending) -->
+<!-- @origin: hexa-space@local-draft (canon upstream pending) -->
 <!-- @group: operations (extension verb) -->
 
 # 🔥 hexa-mondaloy — n=6 nickel-based combustion-resistant superalloy verb

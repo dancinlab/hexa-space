@@ -249,7 +249,7 @@ Second cross-cutter under the RSC recipe — anchor-consistency audit
 across roadmap + 27 verb specs + README + CHANGELOG + hexa.toml.
 
 - `verify/cross_doc_audit.hexa` — 18-check audit covering: 27/27 specs
-  carry `@canonical`/`@origin`/`n6-architecture` provenance headers;
+  carry `@canonical`/`@origin`/`canon` provenance headers;
   16/16 ops specs cite `aerospace_transport/spacex_intel_2026.md`; SoT
   intel doc present + > 1 KB; roadmap §A.4 preregisters all 4
   falsifiers (F-SPACE-1..4); roadmap names sister substrates
@@ -349,7 +349,7 @@ verify_*.hexa companion. **16/16 emit `__HEXA_<VERB>_VERIFY__ PASS`.**
   (spec + verify_*.hexa lattice-closure). Verdict bumped to
   `SPEC_PLUS_OPS_LATTICE`.
 - Operations verbs are **drafted locally**; not yet upstream in
-  `n6-architecture/domains/space/`. Cross-link headers mark each as
+  `canon/domains/space/`. Cross-link headers mark each as
   `pending-upstream`.
 
 ### Provenance
@@ -364,7 +364,7 @@ verify_*.hexa companion. **16/16 emit `__HEXA_<VERB>_VERIFY__ PASS`.**
 ## [1.0.0] - 2026-05-06
 
 ### Added
-- Initial standalone extraction from `n6-architecture@c0f1f570`
+- Initial standalone extraction from `canon@c0f1f570`
   (`domains/space/`).
 - 11-verb Space Toolkit (HEXA family), organized in **4 groups**:
   - **core (2)** — `cosmic`, `starship`
@@ -392,7 +392,7 @@ verify_*.hexa companion. **16/16 emit `__HEXA_<VERB>_VERIFY__ PASS`.**
   *hypothesized* across all 11 verbs; no independent in-repo verification.
 
 ### Provenance
-- Extracted from `n6-architecture/domains/space/` at sha `c0f1f570`
+- Extracted from `canon/domains/space/` at sha `c0f1f570`
   (2026-05-06).
 - Sister extractions in the HEXA family: `hexa-bio` v1.1.0
   (4 verbs, biology); `hexa-cosmos` (theory side, cosmology + particle +

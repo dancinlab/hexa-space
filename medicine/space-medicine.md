@@ -1,4 +1,4 @@
-<!-- @canonical: n6-architecture@0570a835:domains/space/space-medicine/space-medicine.md -->
+<!-- @canonical: canon@d1640e62:domains/space/space-medicine/space-medicine.md -->
 <!-- @extracted: 2026-05-06 -->
 <!-- @md5_at_extraction: 9152fbd7d895155a3ff504f9baa6e56d -->
 <!-- gold-standard: shared/harness/sample.md -->

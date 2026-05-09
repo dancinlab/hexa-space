@@ -1,6 +1,6 @@
 <!-- @canonical: pending-upstream:domains/space/space_datacenter/space_datacenter.md -->
 <!-- @extracted: 2026-05-07 -->
-<!-- @origin: hexa-space@local-draft (n6-architecture upstream pending) -->
+<!-- @origin: hexa-space@local-draft (canon upstream pending) -->
 <!-- @group: operations (extension verb) -->
 
 # 🏛️ hexa-space-datacenter — n=6 orbital edge-compute datacenter verb

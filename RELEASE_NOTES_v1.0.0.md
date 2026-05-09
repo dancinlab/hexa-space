@@ -2,7 +2,7 @@
 
 **Release date**: 2026-05-06
 **Closure verdict**: **SPEC_ONLY** (11/11 verbs spec; 0/11 wired)
-**Provenance**: extracted 2026-05-06 from `n6-architecture/domains/space/`
+**Provenance**: extracted 2026-05-06 from `canon/domains/space/`
 at sha `c0f1f570`. Sister extraction of `hexa-bio` v1.1.0
 (biology axis, 4 verbs).
 
@@ -16,7 +16,7 @@ the working `.hexa` CLI dispatcher is a placeholder.
 ## Highlights
 
 - **11-verb / 4-group organization** of every space domain currently
-  registered under `n6-architecture/domains/space/`.
+  registered under `canon/domains/space/`.
 - **Placeholder CLI dispatcher** (`cli/hexa-space.hexa`) with `status`,
   `group <…>`, `selftest`, `help`, `--version`.
 - **n=6 invariant lattice** — `σ(6)=12, τ(6)=4, φ(6)=2, J₂=24`; master
@@ -58,14 +58,14 @@ hexa-space group life                  # astrobiology, medicine
    verifies spec-file presence, but does not run any per-verb simulation.
 2. **n=6 lattice claim is hypothesized for all 11 verbs**. No independent
    in-repo verification is performed; the lattice mapping is inherited
-   from `n6-architecture/domains/space/` design docs.
+   from `canon/domains/space/` design docs.
 3. **Working `.hexa` CLI per verb is TBD.** Numerical sandboxes (analogous
    to `hexa-bio/weave/`'s cage-assembly ODE) are deferred to post-v1
    cycles.
 
 ## Provenance
 
-- Extracted from `n6-architecture/domains/space/` at sha `c0f1f570`
+- Extracted from `canon/domains/space/` at sha `c0f1f570`
   (2026-05-06).
 - Sister theory-side substrate: `hexa-cosmos` (cosmology + particle +
   cosmic-observatory).

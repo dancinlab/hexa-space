@@ -236,7 +236,7 @@ Master identity holds: σ·φ = n·τ = 12·2 = 6·4 = **24**.
 
 ## §6 Provenance & cost
 
-- **Compiled:** 2026-05-07 via WebSearch sweep (sister of n6-architecture data discipline).
+- **Compiled:** 2026-05-07 via WebSearch sweep (sister of canon data discipline).
 - **Verb owner:** `aerospace_transport` (engineering group).
 - **Cost:** $0 — text/CLI only, no API calls beyond WebSearch.
 - **raw#10 honest C3:** dates marked `NET` are *no-earlier-than* targets;

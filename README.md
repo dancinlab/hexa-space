@@ -26,7 +26,7 @@
 [![Verbs: 27](https://img.shields.io/badge/verbs-27_(11_canonical_+_16_ops)-blue.svg)](#verbs)
 [![Wired: 16/27](https://img.shields.io/badge/wired-16%2F27_(16%2F16_ops_+_0%2F11_canonical)-green.svg)](#verbs)
 [![Groups: 5](https://img.shields.io/badge/groups-core_·_engineering_·_observation_·_life_·_operations-purple.svg)](#verbs)
-[![Provenance: n6@c0f1f570](https://img.shields.io/badge/provenance-n6--architecture@c0f1f570-blue.svg)](https://github.com/dancinlab/n6-architecture)
+[![Provenance: n6@c0f1f570](https://img.shields.io/badge/provenance-n6--architecture@c0f1f570-blue.svg)](https://github.com/dancinlab/canon)
 [![Tests: 5 harnesses](https://img.shields.io/badge/tests-5_harnesses_PASS-success.svg)](#verifying)
 [![RSC: saturated](https://img.shields.io/badge/RSC-saturated_2026--05--08-success.svg)](.roadmap.hexa_space)
 [![Falsifiers: 4/4 @ 67%](https://img.shields.io/badge/F--SPACE--*-4%2F4_@_67%25-success.svg)](verify/falsifier_check.hexa)
@@ -40,7 +40,7 @@
 spec-first single-source-of-truth substrate that:
 
 1. pulls every space domain registered under
-   `n6-architecture/domains/space/` (canonical 11 verbs) into one
+   `canon/domains/space/` (canonical 11 verbs) into one
    organized CLI surface, and
 2. **extends** that core with a 16-verb `operations` group that
    *interprets* SpaceX-domain entities (Starship · Falcon · Dragon ·
@@ -200,7 +200,7 @@ Per [`bedrock/docs/runnable_surface_recipe.md`](https://github.com/dancinlab/bed
 ## Verbs
 
 27 verbs / 5 groups. Canonical 11 are `.md` design docs cp -R'd from
-`n6-architecture/domains/space/` (sha `c0f1f570`). Operations 16 are
+`canon/domains/space/` (sha `c0f1f570`). Operations 16 are
 locally drafted; spec MD + `verify_*.hexa` lattice script per verb.
 
 ### core (2)
@@ -247,7 +247,7 @@ locally drafted; spec MD + `verify_*.hexa` lattice script per verb.
 
 ### operations (ext, 16) — drafted from SpaceX intel 2026-05-07
 
-Pending upstream landing in `n6-architecture/domains/space/`. Each verb
+Pending upstream landing in `canon/domains/space/`. Each verb
 ships a spec MD + `verify_<verb>.hexa` lattice-closure script and is
 runnable via `hexa run cli/hexa-space.hexa verify <verb>`.
 
@@ -444,7 +444,7 @@ scripts are pure hexa-lang (raw#9 STRICT — no Python).
 - **Sister theory-side substrate**: [`dancinlab/hexa-cosmos`](https://github.com/dancinlab/hexa-cosmos) — cosmology + particle + cosmic-observatory (theory companion to this engineering / observation / life axis).
 - **Sister starship axis**: [`dancinlab/hexa-ufo`](https://github.com/dancinlab/hexa-ufo) — extends the `starship` verb with anomaly-vehicle modeling.
 - **Sister biology axis**: [`dancinlab/hexa-bio`](https://github.com/dancinlab/hexa-bio) — molecular toolkit (weave/nanobot/ribozyme/virocapsid).
-- **Upstream SSOT (canonical specs)**: `n6-architecture/domains/space/` (sha [`c0f1f570`](https://github.com/dancinlab/n6-architecture/commit/c0f1f570)).
+- **Upstream SSOT (canonical specs)**: `canon/domains/space/` (sha [`c0f1f570`](https://github.com/dancinlab/canon/commit/c0f1f570)).
 - **Operations data feed**: [`aerospace_transport/spacex_intel_2026.md`](aerospace_transport/spacex_intel_2026.md) — SpaceX 2026 active+upcoming program registry (web sweep 2026-05-07; 30+ sources cited in §5 of that file).
 
 ---

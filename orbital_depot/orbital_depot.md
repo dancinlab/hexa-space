@@ -1,6 +1,6 @@
 <!-- @canonical: pending-upstream:domains/space/orbital_depot/orbital_depot.md -->
 <!-- @extracted: 2026-05-07 -->
-<!-- @origin: hexa-space@local-draft (n6-architecture upstream pending) -->
+<!-- @origin: hexa-space@local-draft (canon upstream pending) -->
 <!-- @group: operations (extension verb) -->
 
 # ⛽ hexa-orbital-depot — n=6 orbital propellant depot verb

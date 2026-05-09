@@ -1,6 +1,6 @@
 <!-- @canonical: pending-upstream:domains/space/space_ai_center/space_ai_center.md -->
 <!-- @extracted: 2026-05-07 -->
-<!-- @origin: hexa-space@local-draft (n6-architecture upstream pending) -->
+<!-- @origin: hexa-space@local-draft (canon upstream pending) -->
 <!-- @group: operations (extension verb) -->
 
 # 🤖 hexa-space-ai-center — n=6 space autonomy / AI compute verb

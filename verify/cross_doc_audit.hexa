@@ -4,7 +4,7 @@
 // Scans the canonical project documents and confirms shared anchors agree
 // across roadmap + 27 pillar specs + README + CHANGELOG + hexa.toml. The
 // shared anchors are: provenance headers (@canonical / @origin /
-// n6-architecture), the 4 falsifier IDs (F-SPACE-1..4), the 16-verb ops
+// canon), the 4 falsifier IDs (F-SPACE-1..4), the 16-verb ops
 // SoT (aerospace_transport/spacex_intel_2026.md), and the sister-substrate
 // cross-cite set (hexa-cosmos / hexa-ufo / hexa-rtsc / hexa-cern).
 //
@@ -126,11 +126,11 @@ fn check_provenance_headers() {
     let mut missing: [str] = []
     for rel in SPECS {
         let txt = _read(ROOT + "/" + rel)
-        let ok = _any(txt, ["@canonical", "@origin", "n6-architecture"])
+        let ok = _any(txt, ["@canonical", "@origin", "canon"])
         if !ok { missing = missing + [rel] }
     }
     _check(missing.len() == 0,
-           "27/27 verb specs carry @canonical / @origin / n6-architecture provenance",
+           "27/27 verb specs carry @canonical / @origin / canon provenance",
            "missing: " + missing.join(", "))
 }
 

@@ -1,6 +1,6 @@
 <!-- @canonical: pending-upstream:domains/space/mars_base/mars_base.md -->
 <!-- @extracted: 2026-05-07 -->
-<!-- @origin: hexa-space@local-draft (n6-architecture upstream pending) -->
+<!-- @origin: hexa-space@local-draft (canon upstream pending) -->
 <!-- @group: operations (extension verb) -->
 
 # 🟥 hexa-mars-base — n=6 Mars settlement verb

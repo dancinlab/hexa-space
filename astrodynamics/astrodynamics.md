@@ -1,4 +1,4 @@
-<!-- @canonical: n6-architecture@0570a835:domains/space/astrodynamics/astrodynamics.md -->
+<!-- @canonical: canon@d1640e62:domains/space/astrodynamics/astrodynamics.md -->
 <!-- @extracted: 2026-05-06 -->
 <!-- @md5_at_extraction: 394311415b1b870fc6395fa87ea089e8 -->
 <!-- gold-standard: shared/harness/sample.md -->

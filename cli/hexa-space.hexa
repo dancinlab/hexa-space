@@ -64,7 +64,7 @@ let HS = hexa_space_root()
 // ─── verb registry (11 verbs, grouped) ───
 //
 // Each entry: (group, verb_slug, spec_relpath)
-// Spec files are the .md design docs cp -R'd from n6-architecture/domains/space/.
+// Spec files are the .md design docs cp -R'd from canon/domains/space/.
 
 let VERBS_CORE: [str] = [
     "cosmic|cosmic/hexa-cosmic.md",
@@ -90,7 +90,7 @@ let VERBS_LIFE: [str] = [
 //
 // Source-of-truth for these is aerospace_transport/spacex_intel_2026.md.
 // Each verb has a spec MD + verify_*.hexa companion. Pending upstream
-// landing in n6-architecture/domains/space/<slug>/.
+// landing in canon/domains/space/<slug>/.
 
 let VERBS_OPERATIONS: [str] = [
     "spaceship|spaceship/spaceship.md",
@@ -166,7 +166,7 @@ fn _print_caveats() {
     println("     all canonical verbs and operationally fitted for ops verbs against")
     println("     the SpaceX 2026 snapshot (aerospace_transport/spacex_intel_2026.md).")
     println("  3. operations verbs are pending-upstream — not yet landed in")
-    println("     n6-architecture/domains/space/. Treat them as hexa-space drafts.")
+    println("     canon/domains/space/. Treat them as hexa-space drafts.")
     println("  4. Sister substrates: hexa-cosmos (theory) · hexa-ufo (starship co-axis).")
 }
 
@@ -578,7 +578,7 @@ fn cmd_selftest(a: [str]) {
 
 fn cmd_version() {
     println("hexa-space " + VERSION)
-    println("standalone Space Toolkit (HEXA family — extracted from n6-architecture@c0f1f570 2026-05-06)")
+    println("standalone Space Toolkit (HEXA family — extracted from canon@c0f1f570 2026-05-06)")
     println("license: MIT")
     println("repo:    https://github.com/dancinlab/hexa-space")
 }

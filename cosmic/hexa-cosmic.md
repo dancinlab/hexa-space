@@ -1,4 +1,4 @@
-<!-- @canonical: n6-architecture@0570a835:domains/space/hexa-cosmic/hexa-cosmic.md -->
+<!-- @canonical: canon@d1640e62:domains/space/hexa-cosmic/hexa-cosmic.md -->
 <!-- @extracted: 2026-05-06 -->
 <!-- @md5_at_extraction: d26b243b8262af1453f92c30f9c8faca -->
 <!-- gold-standard: shared/harness/sample.md -->
