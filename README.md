@@ -20,6 +20,7 @@
 > bundles (Phase E — schematic + BOM + PCB stack-up + commissioning
 > checklist + KiCad-readable `.kicad_sch`).
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20102622.svg)](https://doi.org/10.5281/zenodo.20102622)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-1.1.0--pre-informational.svg)](CHANGELOG.md)
 [![Manifest](https://img.shields.io/badge/manifest-hexa.toml-lightgrey.svg)](hexa.toml)
