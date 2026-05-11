@@ -1,3 +1,6 @@
+<!-- @canonical: n6-architecture@0570a835:domains/space/observational-astronomy/observational-astronomy.md -->
+<!-- @extracted: 2026-05-06 -->
+<!-- @md5_at_extraction: 9e148b73a3064c389875c290e14b694f -->
 <!-- gold-standard: shared/harness/sample.md -->
 ---
 domain: observational-astronomy
