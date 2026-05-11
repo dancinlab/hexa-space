@@ -405,51 +405,31 @@ hexa run cli/hexa-space.hexa spacex group starship
 
 ## Install
 
-### Via `hx` (recommended, after registry registration)
+### Via `hx` (recommended)
 
 ```bash
+# Install hexa-lang (ships `hexa` + `hx` package manager)
+curl -fsSL https://raw.githubusercontent.com/dancinlab/hexa-lang/main/install.sh | bash
+
+# Install hexa-space
 hx install hexa-space          # global, pulls latest from registry
 hx install hexa-space@1.0.0    # pin specific version
-hexa-space --version           # → 1.0.0
+hexa-space --version
 ```
 
-`hx install hexa-space` pulls all 27 verbs (canonical 11 + operations
-16) plus the SpaceX intel data feed (registered in
-`hexa.toml [modules].hexa`).
+`hx install hexa-space` pulls from <https://github.com/dancinlab/hexa-space> and
+installs the standalone CLI under `$HX_HOME/bin/hexa-space`. The hexa-lang
+package registry resolves any cross-substrate dependencies declared in
+`hexa.toml`.
 
-### Via git clone (works today)
+### Optional deps
 
-```bash
-git clone https://github.com/dancinlab/hexa-space.git ~/.hexa-space
-export HEXA_SPACE_ROOT=~/.hexa-space
-export PATH="$HEXA_SPACE_ROOT/cli:$PATH"
-
-# Verify canonical 11 verb-specs present:
-hexa run $HEXA_SPACE_ROOT/cli/hexa-space.hexa selftest
-
-# Verify all 16 operations verbs (lattice closure):
-hexa run $HEXA_SPACE_ROOT/cli/hexa-space.hexa ops verify-all
-
-# Browse a group:
-hexa run $HEXA_SPACE_ROOT/cli/hexa-space.hexa group operations
-```
-
-The repo is **dependency-free** (no Python, no native build). All 27
-verb spec files are pure markdown. The 16 ops `verify_*.hexa`
-scripts are pure hexa-lang (raw#9 STRICT — no Python).
+`hexa-space` is **pure hexa-lang stdlib** — zero Python deps, zero external.
+All default subcommands run with `hx install hexa-space` alone. Cross-substrate
+extras (e.g. `qmirror` for ANU-QRNG + Aer state-vector simulator) are
+auto-resolved by `hx install` when declared in `hexa.toml`.
 
 ---
-
-## Cross-link
-
-- **Sister theory-side substrate**: [`dancinlab/hexa-cosmos`](https://github.com/dancinlab/hexa-cosmos) — cosmology + particle + cosmic-observatory (theory companion to this engineering / observation / life axis).
-- **Sister starship axis**: [`dancinlab/hexa-ufo`](https://github.com/dancinlab/hexa-ufo) — extends the `starship` verb with anomaly-vehicle modeling.
-- **Sister biology axis**: [`dancinlab/hexa-bio`](https://github.com/dancinlab/hexa-bio) — molecular toolkit (weave/nanobot/ribozyme/virocapsid).
-- **Upstream SSOT (canonical specs)**: `canon/domains/space/` (sha [`c0f1f570`](https://github.com/dancinlab/canon/commit/c0f1f570)).
-- **Operations data feed**: [`aerospace_transport/spacex_intel_2026.md`](aerospace_transport/spacex_intel_2026.md) — SpaceX 2026 active+upcoming program registry (web sweep 2026-05-07; 30+ sources cited in §5 of that file).
-
----
-
 ## License
 
 MIT. See [LICENSE](LICENSE).
