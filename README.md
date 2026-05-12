@@ -405,29 +405,29 @@ hexa run cli/hexa-space.hexa spacex group starship
 
 ## Install
 
-### Via `hx` (recommended)
-
 ```bash
-# Install hexa-lang (ships `hexa` + `hx` package manager)
-curl -fsSL https://raw.githubusercontent.com/dancinlab/hexa-lang/main/install.sh | bash
+# 1. Install hexa-lang (gives you `hexa` + `hx` package manager)
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/dancinlab/hexa-lang/main/install.sh)"
 
-# Install hexa-space
-hx install hexa-space          # global, pulls latest from registry
-hx install hexa-space@1.0.0    # pin specific version
-hexa-space --version
+# 2. Install hexa-space
+hx install hexa-space
 ```
 
-`hx install hexa-space` pulls from <https://github.com/dancinlab/hexa-space> and
-installs the standalone CLI under `$HX_HOME/bin/hexa-space`. The hexa-lang
-package registry resolves any cross-substrate dependencies declared in
-`hexa.toml`.
+## Run
 
-### Optional deps
-
-`hexa-space` is **pure hexa-lang stdlib** — zero Python deps, zero external.
-All default subcommands run with `hx install hexa-space` alone. Cross-substrate
-extras (e.g. `qmirror` for ANU-QRNG + Aer state-vector simulator) are
-auto-resolved by `hx install` when declared in `hexa.toml`.
+```bash
+hexa-space status              # 27-verb status table + caveats
+hexa-space selftest            # canonical-verb presence sweep (11/11 expected)
+hexa-space group <name>        # list verbs in core/engineering/observation/life/operations
+hexa-space ops [verify-all]    # operations-group registry / 16-verb verify sweep
+hexa-space verify <verb>       # run verify_<verb>.hexa for any registered verb
+hexa-space verify lattice      # n=6 cross-pillar audit
+hexa-space verify falsifier    # F-SPACE-* closure-pct tracker
+hexa-space verify saturation   # RSC self-stop probe
+hexa-space verify board-audit  # Phase E procurement-prep doc audit
+hexa-space verify-all          # run every available verify_*.hexa across all 5 groups
+hexa-space spacex <subcmd>     # SpaceX 2026 program registry (intel/list/active/upcoming/group/show/counts/verify/mk)
+```
 
 ---
 ## License
