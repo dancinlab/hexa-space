@@ -1,0 +1,122 @@
+#!hexa strict
+// hexa-space/verify/run_all.hexa — orchestrator (.hexa primary).
+//
+// Single CLI entry that runs all verify/*.hexa scripts (plus the four
+// Phase C firmware/sim/*.hexa sentinels) and aggregates pass/fail.
+// Sister of hexa-fusion/hexa-rtsc/hexa-cern run_all (same shape, different
+// falsifier surface) — all feed the same bookkeeping-closure contract
+// (sat-1 ∧ sat-2 ⇒ regression-locked, NOT physics-settled).
+//
+// Inventory (RSC recipe §7.3 §1 #7+#13):
+//   T1 algebraic   : pillar verify_*.hexa scripts (16 ops + 4 canonical
+//                    domains) — sit one level deeper, not in this list.
+//   T2 numerical   : numerics_kepler + numerics_falcon + numerics_starship +
+//                    numerics_bone_loss + numerics_lattice_arithmetic +
+//                    numerics_cross_pillar                                (6)
+//   meta           : lattice_check + cross_doc_audit + falsifier_check +
+//                    lint_numerics + saturation_check + board_audit       (6)
+//   firmware Phase C : orbit_pipeline + launch_telemetry + dxa_pipeline +
+//                      raptor_cluster                                     (4)
+//
+// Total: 16 scripts (12 verify/*.hexa + 4 firmware/sim/*.hexa).
+//
+// Run:
+//     hexa run verify/run_all.hexa     # exit 0 = all subscripts PASS
+//
+// HONESTY (closure-honesty-contract):
+//
+//   PASS here means RC=0 from each subscript — bookkeeping closure, NOT
+//   physics-settled. T3 = published-invariant agreement (ISS/SpaceX/JAXA/
+//   NASA flight numbers — raw#10 C3), not live hardware telemetry.
+//   Underlying space-program CLAIMS (Mars-base colony, Dyson swarm,
+//   interstellar probe, Starship $200/kg, lunar-Gateway crew rotation,
+//   any-and-all crewed-Mars architectures) remain UNPROVEN until Stage-1+
+//   hardware (Phase F board procurement → Phase G commissioning → Phase H
+//   T3 closure event). Saturated ≠ falsified ≠ confirmed.
+//
+//   raw#10 C3 honesty: ISS bone-loss, SpaceX Falcon octaweb, JAXA Kibo
+//   numerics, NASA Twin Study figures use published invariants (NASA-HRP,
+//   SpaceX FCC filings, Kepler 3rd law) NOT a lattice fit. The n=6 lattice
+//   is hypothesized for the 11 canonical verbs and operationally fitted
+//   for the 16 ops verbs against documented anchors.
+//
+// LATTICE_POLICY.md compliance: lattice tautologies alone (σ·φ=24)
+// are NOT sufficient verification. The numerics_* tier carries the
+// real-limits anchors (Tsiolkovsky L1, Hohmann L4, light-speed L5, NASA-HRP
+// L6, Greenwald, Carnot — see LIMIT_BREAKTHROUGH.md §2-§5).
+// verify/falsifier_check.hexa tracks the real F-SPACE-{1,2,3,4} closure
+// surface, not lattice fit.
+
+let SCRIPTS: [str] = [
+    // ─── T2 numerical (recipe §1 #7) ───────────────────────────────
+    "verify/numerics_kepler.hexa",
+    "verify/numerics_falcon.hexa",
+    "verify/numerics_starship.hexa",
+    "verify/numerics_bone_loss.hexa",
+    "verify/numerics_lattice_arithmetic.hexa",
+    "verify/numerics_cross_pillar.hexa",
+
+    // ─── meta (lattice + cross-doc + 4 closure gates) ──────────────
+    "verify/lattice_check.hexa",
+    "verify/cross_doc_audit.hexa",
+    "verify/falsifier_check.hexa",
+    "verify/lint_numerics.hexa",
+    "verify/saturation_check.hexa",
+    "verify/board_audit.hexa",
+
+    // ─── Phase C sim-firmware (T3 closure path — .roadmap §A.6) ────
+    "firmware/sim/orbit_pipeline.hexa",
+    "firmware/sim/launch_telemetry.hexa",
+    "firmware/sim/dxa_pipeline.hexa",
+    "firmware/sim/raptor_cluster.hexa",
+]
+
+fn main() {
+    println("========================================================================")
+    println("  hexa-space verify/run_all — aggregate sweep")
+    println("========================================================================")
+    let mut passed = 0
+    let mut failed = 0
+    for s in SCRIPTS {
+        println("")
+        println("---- " + s + " ----")
+        let rc_str = exec("hexa run " + s + " >/tmp/_hexa_space_v.out 2>&1; echo $?").trim()
+        let rc = int(rc_str)
+        let out = exec("cat /tmp/_hexa_space_v.out 2>/dev/null")
+        // print last 6 lines for compactness
+        let lines = out.split("\n")
+        let n = lines.len()
+        let mut start = 0
+        if n > 6 { start = n - 6 }
+        let mut k = start
+        while k < n {
+            println(lines[k])
+            k = k + 1
+        }
+        if rc == 0 {
+            passed = passed + 1
+            println("  -> " + s + " PASS")
+        } else {
+            failed = failed + 1
+            println("  -> " + s + " FAIL (rc=" + str(rc) + ")")
+        }
+    }
+    println("")
+    println("========================================================================")
+    let total = passed + failed
+    println("  " + str(passed) + "/" + str(total) + " scripts passed")
+    if failed > 0 {
+        println("  verify sweep FAILED - see per-script output above.")
+        println("__HEXA_SPACE_RUN_ALL__ FAIL")
+        exit(1)
+    }
+    println("  PASS - bookkeeping closure across 16 verify+firmware-sim scripts.")
+    println("")
+    println("  HONESTY: PASS = subscript rc=0 (bookkeeping). T3 = published-")
+    println("  invariant agreement (ISS/SpaceX/JAXA/NASA - raw#10 C3), NOT live")
+    println("  flight telemetry. Underlying space CLAIMS (Mars colony, Dyson")
+    println("  swarm, interstellar, Starship $200/kg, crewed-Mars architecture)")
+    println("  remain UNPROVEN until Stage-1+ hardware (Phase F-G-H).")
+    println("  Saturated != falsified != confirmed.")
+    println("__HEXA_SPACE_RUN_ALL__ PASS")
+}

@@ -31,6 +31,7 @@
 [![Tests: 5 harnesses](https://img.shields.io/badge/tests-5_harnesses_PASS-success.svg)](#verifying)
 [![RSC: saturated](https://img.shields.io/badge/RSC-saturated_2026--05--08-success.svg)](.roadmap.hexa_space)
 [![Falsifiers: 4/4 @ 67%](https://img.shields.io/badge/F--SPACE--*-4%2F4_@_67%25-success.svg)](verify/falsifier_check.hexa)
+[![verify run_all 16/16](https://img.shields.io/badge/verify-16%2F16_(bookkeeping)-brightgreen.svg)](verify/run_all.hexa)
 [![Phase: A→E ✓ · F gated](https://img.shields.io/badge/phase-A→E_✓_·_F_gated-yellow.svg)](firmware/board/README.md)
 
 ---
@@ -96,7 +97,8 @@ snapshot — e.g. `sopfr⁴ · J₂ = 15,000` (DTC FCC filing exact),
 hexa-space/
 ├── cli/
 │   └── hexa-space.hexa          ← unified dispatcher (status/group/ops/verify/spacex)
-├── verify/                       ← RSC §1 cross-cutter inventory (12 scripts)
+├── verify/                       ← RSC §1 cross-cutter inventory (12 scripts + run_all)
+│   ├── run_all.hexa              orchestrator: 16/16 (12 verify/* + 4 fw/sim) bookkeeping closure
 │   ├── lattice_check.hexa        n=6 master closure across 27 verbs   24/24
 │   ├── cross_doc_audit.hexa      anchor consistency across docs       18/18
 │   ├── numerics_kepler.hexa      F-SPACE-1 T2 (Kepler 3rd, math_pure)  6/6
@@ -220,6 +222,30 @@ for t in tests/test_selftest.hexa tests/test_spacex.hexa tests/test_ops.hexa \
 done
 ```
 
+### Orchestrator (single .hexa entry-point — sister of `hexa-fusion`/`hexa-rtsc` `run_all`)
+
+```bash
+hexa run verify/run_all.hexa   # 16/16 bookkeeping closure across all verify/*.hexa + firmware/sim/*.hexa
+# expected tail: __HEXA_SPACE_RUN_ALL__ PASS
+```
+
+Coverage table for the orchestrator sweep:
+
+| Tier               | Count | Scripts                                                                          | Result |
+|--------------------|:-----:|----------------------------------------------------------------------------------|--------|
+| T2 numerical       | 6     | `numerics_{kepler,falcon,starship,bone_loss,lattice_arithmetic,cross_pillar}`    | 6/6    |
+| meta cross-cutter  | 6     | `lattice_check`, `cross_doc_audit`, `falsifier_check`, `lint_numerics`, `saturation_check`, `board_audit` | 6/6    |
+| Phase C sim-firmware | 4   | `firmware/sim/{orbit_pipeline,launch_telemetry,dxa_pipeline,raptor_cluster}.hexa` | 4/4    |
+| **Total**          | **16** | bookkeeping closure across `verify/*.hexa` + `firmware/sim/*.hexa`             | **16/16** |
+
+**Honesty contract (raw#10 C3):** PASS here means subscript `rc=0` — bookkeeping
+closure, **NOT** physics-settled. T3 = published-invariant agreement (ISS / SpaceX
+FCC / JAXA Kibo / NASA-HRP Twin Study) NOT live raw telemetry or lattice fit.
+Underlying space-program CLAIMS (Mars colony, Dyson swarm, interstellar probe,
+Starship $200/kg, lunar Gateway, crewed-Mars architectures) remain **UNPROVEN**
+until Stage-1+ hardware (Phase F → G → H). Saturated ≠ falsified ≠ confirmed.
+See [`LATTICE_POLICY.md`](LATTICE_POLICY.md) §1.2 + [`LIMIT_BREAKTHROUGH.md`](LIMIT_BREAKTHROUGH.md) §5.
+
 Or run any single cross-cutter / firmware sim via the CLI proxy:
 
 ```bash
@@ -322,9 +348,17 @@ hexa run cli/hexa-space.hexa spacex group starship
   ops verbs against documented SpaceX numbers.  T3 closure event
   (Phase F+G+H) will test whether real silicon agrees with the
   closed-form derivations within recipe-stated tolerances.
+- **`verify/run_all.hexa` orchestrator** sweeps 16 scripts (6 T2 numerical +
+  6 meta cross-cutter + 4 Phase C sim-firmware) and emits
+  `__HEXA_SPACE_RUN_ALL__ PASS` at 16/16 bookkeeping closure — sister
+  pattern of `hexa-fusion` / `hexa-rtsc` / `hexa-cern` `run_all`. This is
+  **bookkeeping** closure only; ISS/SpaceX/JAXA/NASA flight-data anchors
+  use published invariants (NASA-HRP, FCC filings, Kepler 3rd law) NOT
+  lattice fit. Space-program CLAIMS (Mars base, Dyson swarm, interstellar,
+  crewed-Mars) remain UNPROVEN until Stage-1+ hardware (Phase F-G-H).
 - Verdict: **`SPEC_PLUS_OPS_LATTICE_RSC_SATURATED`** (27/27 spec;
-  16/27 wired pillar; 12/12 RSC cross-cutter; Phase A-E ✓; F-SPACE-1/2/3/4
-  all 67 %; T3 awaits Phase F).
+  16/27 wired pillar; 12/12 RSC cross-cutter; 16/16 run_all bookkeeping;
+  Phase A-E ✓; F-SPACE-1/2/3/4 all 67 %; T3 awaits Phase F).
 
 ---
 
@@ -352,6 +386,9 @@ hexa-space verify saturation   # RSC self-stop probe
 hexa-space verify board-audit  # Phase E procurement-prep doc audit
 hexa-space verify-all          # run every available verify_*.hexa across all 5 groups
 hexa-space spacex <subcmd>     # SpaceX 2026 program registry (intel/list/active/upcoming/group/show/counts/verify/mk)
+
+# Orchestrator (sister of hexa-fusion / hexa-rtsc verify/run_all.hexa)
+hexa run verify/run_all.hexa   # aggregate sweep — 16/16 verify/*.hexa + firmware/sim/*.hexa (bookkeeping closure)
 ```
 
 ---
