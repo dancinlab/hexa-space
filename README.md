@@ -98,7 +98,7 @@ snapshot — e.g. `sopfr⁴ · J₂ = 15,000` (DTC FCC filing exact),
 
 ---
 
-## Directory layout
+## Repo layout
 
 ```
 hexa-space/
