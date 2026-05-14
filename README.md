@@ -1,4 +1,25 @@
-# 🚀 hexa-space — Space Toolkit (HEXA family)
+<p align="center">
+  <img src="docs/logo.svg" width="140" alt="hexa-space">
+</p>
+
+<h1 align="center">🚀 hexa-space</h1>
+
+<p align="center"><strong>HEXA-Space Family</strong> — aerospace · 150/150 EXACT · Egyptian 3+2+1=n</p>
+
+<p align="center">
+  <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/license-MIT-blue"></a>
+  <a href="verify/run_all.hexa"><img alt="Verify" src="https://img.shields.io/badge/verify-16%2F16-brightgreen"></a>
+  <img alt="Spec" src="https://img.shields.io/badge/version-v1.1.0--pre-success">
+  <img alt="Verbs" src="https://img.shields.io/badge/verbs-27%20(11%20canon%20·%2016%20ops)-informational">
+  <img alt="Falsifiers" src="https://img.shields.io/badge/F--SPACE--*-4%2F4%20%40%2067%25-informational">
+  <img alt="EXACT" src="https://img.shields.io/badge/EXACT-150%2F150-informational">
+  <img alt="Sibling" src="https://img.shields.io/badge/sibling-hexa--bio%20·%20hexa--matter%20·%20hexa--physics-blueviolet">
+  <a href="https://doi.org/10.5281/zenodo.20102622"><img alt="DOI" src="https://zenodo.org/badge/DOI/10.5281/zenodo.20102622.svg"></a>
+</p>
+
+<p align="center">aerospace · n=6 · σ=12 · τ=4 · φ=2 · Egyptian 3+2+1=n · core · engineering · observation · life · operations · Starship · Falcon · Dragon · Starlink · astrodynamics · astrobiology</p>
+
+---
 
 > **27-verb space substrate** in **5 groups** + **runnable surface**
 > (RSC saturated 2026-05-08) + **Stage-1 procurement-prep**:
@@ -19,20 +40,6 @@
 > skeletons (Phase D) + 4 `firmware/board/*/` per-board procurement
 > bundles (Phase E — schematic + BOM + PCB stack-up + commissioning
 > checklist + KiCad-readable `.kicad_sch`).
-
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20102622.svg)](https://doi.org/10.5281/zenodo.20102622)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.1.0--pre-informational.svg)](CHANGELOG.md)
-[![Manifest](https://img.shields.io/badge/manifest-hexa.toml-lightgrey.svg)](hexa.toml)
-[![Verbs: 27](https://img.shields.io/badge/verbs-27_(11_canonical_+_16_ops)-blue.svg)](#verbs)
-[![Wired: 16/27](https://img.shields.io/badge/wired-16%2F27_(16%2F16_ops_+_0%2F11_canonical)-green.svg)](#verbs)
-[![Groups: 5](https://img.shields.io/badge/groups-core_·_engineering_·_observation_·_life_·_operations-purple.svg)](#verbs)
-[![Provenance: n6@c0f1f570](https://img.shields.io/badge/provenance-n6--architecture@c0f1f570-blue.svg)](https://github.com/dancinlab/canon)
-[![Tests: 5 harnesses](https://img.shields.io/badge/tests-5_harnesses_PASS-success.svg)](#verifying)
-[![RSC: saturated](https://img.shields.io/badge/RSC-saturated_2026--05--08-success.svg)](.roadmap.hexa_space)
-[![Falsifiers: 4/4 @ 67%](https://img.shields.io/badge/F--SPACE--*-4%2F4_@_67%25-success.svg)](verify/falsifier_check.hexa)
-[![verify run_all 16/16](https://img.shields.io/badge/verify-16%2F16_(bookkeeping)-brightgreen.svg)](verify/run_all.hexa)
-[![Phase: A→E ✓ · F gated](https://img.shields.io/badge/phase-A→E_✓_·_F_gated-yellow.svg)](firmware/board/README.md)
 
 ---
 
@@ -238,7 +245,6 @@ Coverage table for the orchestrator sweep:
 | Phase C sim-firmware | 4   | `firmware/sim/{orbit_pipeline,launch_telemetry,dxa_pipeline,raptor_cluster}.hexa` | 4/4    |
 | **Total**          | **16** | bookkeeping closure across `verify/*.hexa` + `firmware/sim/*.hexa`             | **16/16** |
 
-**Honesty contract (raw#10 C3):** PASS here means subscript `rc=0` — bookkeeping
 closure, **NOT** physics-settled. T3 = published-invariant agreement (ISS / SpaceX
 FCC / JAXA Kibo / NASA-HRP Twin Study) NOT live raw telemetry or lattice fit.
 Underlying space-program CLAIMS (Mars colony, Dyson swarm, interstellar probe,
@@ -324,7 +330,6 @@ hexa run cli/hexa-space.hexa spacex group starship
 **27-verb 통합 substrate · RSC saturated (sat-1 ✓ + sat-2 ✓ at 2026-05-08) ·
 4/4 falsifiers @ 67 % closure · Phase A-E ✓ · Phase F funding-gated.**
 
-### Honest closure C3 (raw#10)
 
 - 11 canonical verbs at v1.0.0 ship as **spec-only** (`.md` design docs).
 - **20 pillar `verify_<verb>.hexa` scripts** test n=6 **bookkeeping closure**
