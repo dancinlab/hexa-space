@@ -46,7 +46,7 @@
 @I id001 := "hexa-space" :: identity-claim [d=2026-05-14 active]
   kind = "HEXA-Space family — aerospace"
   brief = "HEXA-Space family · aerospace · 150/150 EXACT · Egyptian 3+2+1=n"
-  parent = "dancinlab/echoes"
+  parent = "dancinlab"
 
 @L l1 := "repo-layout" :: structure [active]
   .roadmap.hexa_space -> "file"
